@@ -1,6 +1,6 @@
 package homework_1
 
-import java.util.Scanner;
+import java.util.Scanner
 
 fun getIterativeFactorial(number: Int): Int {
     var factorial = 1
