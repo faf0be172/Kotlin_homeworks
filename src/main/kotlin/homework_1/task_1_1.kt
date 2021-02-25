@@ -14,9 +14,9 @@ fun getRecursiveFactorial(number: Int): Int {
 }
 
 fun recursiveFactorial(count: Int, factorialDegree: Int, result: Int): Int {
-    if (count <= factorialDegree)
-        return recursiveFactorial(count + 1, factorialDegree, result * count)
-    return result
+    return if (count <= factorialDegree)
+        recursiveFactorial(count + 1, factorialDegree, result * count)
+    else result
 }
 
 fun enterUserNumber(): Int {
