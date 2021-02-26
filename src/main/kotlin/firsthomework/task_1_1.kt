@@ -18,11 +18,21 @@ private class FactorialProcessor {
     }
 }
 
-fun main() {
-    println("Enter number to process its factorial:")
-    val scan = Scanner(System.`in`)
-    val enteredNumber = scan.nextInt()
+fun enterUserNumber(): Int {
+    println("Enter positive whole number to process its factorial:")
+    val enteredValue = Scanner(System.`in`).next()
+    val number = try {
+        enteredValue.toInt()
+    } catch (error: NumberFormatException) {
+        throw NumberFormatException("Incorrect value")
+    }
 
+    if (number < 0) throw Exception("Entered number incorrect or non-positive")
+    return number
+}
+
+fun main() {
+    val enteredNumber = enterUserNumber()
     val factorialProcessor = FactorialProcessor()
     println("Iterative processing result: ${factorialProcessor.getIterativeFactorial(enteredNumber)}")
     println("Recursive processing result: ${factorialProcessor.getRecursiveFactorial(enteredNumber)}")
