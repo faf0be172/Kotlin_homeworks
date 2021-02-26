@@ -2,20 +2,17 @@ package firsthomework
 
 import java.util.Scanner
 
-object FactorialProcessor {
+fun getIterativeFactorial(number: Int): Int {
+    var factorial = 1
+    for (i in 2..number)
+        factorial *= i
+    return factorial
+}
 
-    fun getIterativeFactorial(number: Int): Int {
-        var factorial = 1
-        for (i in 2..number)
-            factorial *= i
-        return factorial
-    }
-
-    fun getRecursiveFactorial(factorialDegree: Int, count: Int = 1, result: Int = 1): Int {
-        return if (count <= factorialDegree) {
-            getRecursiveFactorial(factorialDegree, count + 1, result * count)
-        } else result
-    }
+fun getRecursiveFactorial(factorialDegree: Int, count: Int = 1, result: Int = 1): Int {
+    return if (count <= factorialDegree) {
+        getRecursiveFactorial(factorialDegree, count + 1, result * count)
+    } else result
 }
 
 fun enterUserNumber(): Int {
@@ -37,6 +34,6 @@ fun enterUserNumber(): Int {
 
 fun main() {
     val enteredNumber = enterUserNumber()
-    println("Iterative processing result: ${FactorialProcessor.getIterativeFactorial(enteredNumber)}")
-    println("Recursive processing result: ${FactorialProcessor.getRecursiveFactorial(enteredNumber)}")
+    println("Iterative processing result: ${getIterativeFactorial(enteredNumber)}")
+    println("Recursive processing result: ${getRecursiveFactorial(enteredNumber)}")
 }
