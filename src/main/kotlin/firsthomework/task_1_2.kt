@@ -4,14 +4,9 @@ import java.util.Scanner
 
 fun getOccurrencesCount(firstString: String, secondString: String): Int {
     if (firstString.isNotEmpty() && secondString.isNotEmpty() && secondString.length <= firstString.length) {
-        var mainString = firstString
-        var count = 0
-        while (mainString.substringAfter(secondString, "").isNotEmpty()) {
-            mainString = (secondString + mainString.substringAfter(secondString, "")).drop(1)
-            count++;
+        return (0..(firstString.length - secondString.length)).count {
+            firstString.substring(it, it + secondString.length) == secondString
         }
-        if (mainString == secondString) count++
-        return count
     }
     return 0
 }
@@ -21,5 +16,5 @@ fun main() {
     val scanner = Scanner(System.`in`)
     val firstString = scanner.nextLine()
     val secondString = scanner.nextLine()
-    println("${getOccurrencesCount(firstString, secondString)}")
+    println("Number of occurrences: ${getOccurrencesCount(firstString, secondString)}")
 }
