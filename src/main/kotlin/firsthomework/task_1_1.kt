@@ -1,4 +1,4 @@
-package homework1
+package firsthomework
 
 import java.util.Scanner
 
@@ -20,7 +20,6 @@ private class FactorialProcessor {
 
 fun main() {
     println("Enter number to process its factorial:")
-
     val scan = Scanner(System.`in`)
     val enteredNumber = scan.nextInt()
 
