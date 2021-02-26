@@ -1,8 +1,8 @@
-package homework_1
+package homework1
 
 import java.util.Scanner
 
-class FactorialProcessor() {
+class FactorialProcessor {
     fun getIterativeFactorial(number: Int): Int {
         var factorial = 1
         for (i in 2 until number + 1)
@@ -11,9 +11,9 @@ class FactorialProcessor() {
     }
 
     fun getRecursiveFactorial(factorialDegree: Int, count: Int = 1, result: Int = 1): Int {
-        return if (count <= factorialDegree)
+        return if (count <= factorialDegree) {
             getRecursiveFactorial(factorialDegree, count + 1, result * count)
-        else result
+        } else result
     }
 }
 
