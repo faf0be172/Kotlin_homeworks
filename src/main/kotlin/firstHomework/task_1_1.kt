@@ -1,8 +1,9 @@
-package homework1
+package firstHomework
 
 import java.util.Scanner
 
 class FactorialProcessor {
+
     fun getIterativeFactorial(number: Int): Int {
         var factorial = 1
         for (i in 2 until number + 1)
