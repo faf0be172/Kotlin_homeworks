@@ -2,7 +2,7 @@ package firstHomework
 
 import java.util.Scanner
 
-class FactorialProcessor {
+private class FactorialProcessor {
 
     fun getIterativeFactorial(number: Int): Int {
         var factorial = 1
