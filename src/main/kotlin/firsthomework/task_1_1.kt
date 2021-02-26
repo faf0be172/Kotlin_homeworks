@@ -2,11 +2,11 @@ package firsthomework
 
 import java.util.Scanner
 
-private class FactorialProcessor {
+object FactorialProcessor {
 
     fun getIterativeFactorial(number: Int): Int {
         var factorial = 1
-        for (i in 2 until number + 1)
+        for (i in 2..number)
             factorial *= i
         return factorial
     }
@@ -19,10 +19,10 @@ private class FactorialProcessor {
 }
 
 fun enterUserNumber(): Int {
-    var number = 0
+    var number = -1
     val scanner = Scanner(System.`in`)
-    while (number <= 0) {
-        println("Enter positive whole number to process its factorial:")
+    while (number < 0) {
+        println("Enter non-negative whole number to process its factorial:")
         val enteredValue = scanner.next()
         number = try {
             enteredValue.toInt()
@@ -30,14 +30,13 @@ fun enterUserNumber(): Int {
             println("Entered value is incorrect, try again")
             continue
         }
-        if (number <= 0) println("Entered number is non-positive, try again")
+        if (number < 0) println("Entered number is negative, try again")
     }
     return number
 }
 
 fun main() {
     val enteredNumber = enterUserNumber()
-    val factorialProcessor = FactorialProcessor()
-    println("Iterative processing result: ${factorialProcessor.getIterativeFactorial(enteredNumber)}")
-    println("Recursive processing result: ${factorialProcessor.getRecursiveFactorial(enteredNumber)}")
+    println("Iterative processing result: ${FactorialProcessor.getIterativeFactorial(enteredNumber)}")
+    println("Recursive processing result: ${FactorialProcessor.getRecursiveFactorial(enteredNumber)}")
 }
