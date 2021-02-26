@@ -20,9 +20,10 @@ private class FactorialProcessor {
 
 fun enterUserNumber(): Int {
     var number = 0
+    val scanner = Scanner(System.`in`)
     while (number <= 0) {
         println("Enter positive whole number to process its factorial:")
-        val enteredValue = Scanner(System.`in`).next()
+        val enteredValue = scanner.next()
         number = try {
             enteredValue.toInt()
         } catch (error: NumberFormatException) {
