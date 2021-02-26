@@ -19,15 +19,18 @@ private class FactorialProcessor {
 }
 
 fun enterUserNumber(): Int {
-    println("Enter positive whole number to process its factorial:")
-    val enteredValue = Scanner(System.`in`).next()
-    val number = try {
-        enteredValue.toInt()
-    } catch (error: NumberFormatException) {
-        throw NumberFormatException("Incorrect value")
+    var number = 0
+    while (number <= 0) {
+        println("Enter positive whole number to process its factorial:")
+        val enteredValue = Scanner(System.`in`).next()
+        number = try {
+            enteredValue.toInt()
+        } catch (error: NumberFormatException) {
+            println("Entered value is incorrect, try again")
+            continue
+        }
+        if (number <= 0) println("Entered number is non-positive, try again")
     }
-
-    if (number < 0) throw Exception("Entered number incorrect or non-positive")
     return number
 }
 
