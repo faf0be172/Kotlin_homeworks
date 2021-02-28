@@ -2,10 +2,6 @@ package firsthomework
 
 import java.util.Stack
 
-abstract class Action {
-    abstract fun undo()
-}
-
 class PerformedCommandStorage {
     private var actions: Stack<Action> = Stack()
     private var arrayDeque: ArrayDeque<Int> = ArrayDeque()
