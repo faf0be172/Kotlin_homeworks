@@ -1,20 +1,24 @@
 package firsthomework
 
-fun main() {
+fun testStorage() {
     val testingStorage = PerformedCommandStorage()
     testingStorage.printCurrentPlacement()
     testingStorage.undoLastOperation()
-    PushBack(1, testingStorage)
+    PushBack(value = 1, testingStorage)
     testingStorage.printCurrentPlacement()
-    PushFront(-1, testingStorage)
-    testingStorage.printCurrentPlacement()
-    testingStorage.undoLastOperation()
-    testingStorage.printCurrentPlacement()
-    PushBack(2, testingStorage)
-    PushBack(3, testingStorage)
-    PushBack(4, testingStorage)
-    MoveElement(0, 2, testingStorage)
+    PushFront(value = -1, testingStorage)
     testingStorage.printCurrentPlacement()
     testingStorage.undoLastOperation()
     testingStorage.printCurrentPlacement()
+    PushBack(value = 2, testingStorage)
+    PushBack(value = 3, testingStorage)
+    PushBack(value = 4, testingStorage)
+    MoveElement(indexFrom = 0, indexTo = 2, testingStorage)
+    testingStorage.printCurrentPlacement()
+    testingStorage.undoLastOperation()
+    testingStorage.printCurrentPlacement()
+}
+
+fun main() {
+    testStorage()
 }
