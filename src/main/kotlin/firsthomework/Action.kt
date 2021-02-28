@@ -11,7 +11,8 @@ class PushFront(value: Int, private val storage: PerformedCommandStorage) : Acti
     }
 
     override fun undo() {
-        TODO("Not yet implemented")
+        storage.getDeque().removeFirst()
+        storage.getActions().removeLast()
     }
 }
 
@@ -22,17 +23,23 @@ class PushBack(value: Int, private val storage: PerformedCommandStorage) : Actio
     }
 
     override fun undo() {
-        TODO("Not yet implemented")
+        storage.getDeque().removeLast()
+        storage.getActions().removeLast()
     }
 }
 
-class MoveElement(value: Int, private val storage: PerformedCommandStorage) : Action() {
+class MoveElement(
+    private val indexFrom: Int,
+    private val indexTo: Int,
+    private val storage: PerformedCommandStorage
+) : Action() {
     init {
-        TODO("ArrayDeque.moveElement() not yet implemented")
+        storage.getDeque().moveElement(indexFrom, indexTo)
         storage.getActions().addElement(this)
     }
 
     override fun undo() {
-        TODO("Not yet implemented")
+        storage.getDeque().moveElement(indexTo, indexFrom)
+        storage.getActions().removeLast()
     }
 }
