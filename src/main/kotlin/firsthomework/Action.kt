@@ -1,10 +1,10 @@
 package firsthomework
 
-abstract class Action {
-    abstract fun undo()
+interface Action {
+    fun undo()
 }
 
-class PushFront(value: Int, private val storage: PerformedCommandStorage) : Action() {
+class PushFront(value: Int, private val storage: PerformedCommandStorage) : Action {
     init {
         storage.getDeque().addFirst(value)
         storage.getActions().addElement(this)
@@ -16,7 +16,7 @@ class PushFront(value: Int, private val storage: PerformedCommandStorage) : Acti
     }
 }
 
-class PushBack(value: Int, private val storage: PerformedCommandStorage) : Action() {
+class PushBack(value: Int, private val storage: PerformedCommandStorage) : Action {
     init {
         storage.getDeque().addLast(value)
         storage.getActions().addElement(this)
@@ -32,7 +32,7 @@ class MoveElement(
     private val indexFrom: Int,
     private val indexTo: Int,
     private val storage: PerformedCommandStorage
-) : Action() {
+) : Action {
     init {
         storage.getDeque().moveElement(indexFrom, indexTo)
         storage.getActions().addElement(this)
