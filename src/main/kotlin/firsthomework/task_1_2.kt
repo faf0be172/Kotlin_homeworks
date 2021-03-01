@@ -2,11 +2,9 @@ package firsthomework
 
 import java.util.Scanner
 
-fun getOccurrencesCount(firstString: String, secondString: String): Int {
-    if (firstString.isNotEmpty() && secondString.isNotEmpty() && secondString.length <= firstString.length) {
-        return (0..(firstString.length - secondString.length)).count {
-            firstString.substring(it, it + secondString.length) == secondString
-        }
+fun String.getOccurrencesCount(pattern: String): Int {
+    if (this.isNotEmpty() && pattern.isNotEmpty() && pattern.length <= this.length) {
+        return this.windowed(pattern.length).filter { pattern == it }.size
     }
     return 0
 }
@@ -14,7 +12,7 @@ fun getOccurrencesCount(firstString: String, secondString: String): Int {
 fun main() {
     println("Enter two string in different lines to count occurrences:")
     val scanner = Scanner(System.`in`)
-    val firstString = scanner.nextLine()
-    val secondString = scanner.nextLine()
-    println("Number of occurrences: ${getOccurrencesCount(firstString, secondString)}")
+    val originalString = scanner.nextLine()
+    val pattern = scanner.nextLine()
+    println("Number of occurrences: ${originalString.getOccurrencesCount(pattern)}")
 }
