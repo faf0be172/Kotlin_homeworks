@@ -6,25 +6,23 @@ interface Action {
 
 class PushFront(value: Int, private val storage: PerformedCommandStorage) : Action {
     init {
-        storage.getDeque().addFirst(value)
-        storage.getActions().addElement(this)
+        storage.getDeque.addFirst(value)
+        storage.addOperation(this)
     }
 
     override fun undo() {
-        storage.getDeque().removeFirst()
-        storage.getActions().removeLast()
+        storage.getDeque.removeFirst()
     }
 }
 
 class PushBack(value: Int, private val storage: PerformedCommandStorage) : Action {
     init {
-        storage.getDeque().addLast(value)
-        storage.getActions().addElement(this)
+        storage.getDeque.addLast(value)
+        storage.addOperation(this)
     }
 
     override fun undo() {
-        storage.getDeque().removeLast()
-        storage.getActions().removeLast()
+        storage.getDeque.removeLast()
     }
 }
 
@@ -34,12 +32,11 @@ class MoveElement(
     private val storage: PerformedCommandStorage
 ) : Action {
     init {
-        storage.getDeque().moveElement(indexFrom, indexTo)
-        storage.getActions().addElement(this)
+        storage.getDeque.moveElement(indexFrom, indexTo)
+        storage.addOperation(this)
     }
 
     override fun undo() {
-        storage.getDeque().moveElement(indexTo, indexFrom)
-        storage.getActions().removeLast()
+        storage.getDeque.moveElement(indexTo, indexFrom)
     }
 }
