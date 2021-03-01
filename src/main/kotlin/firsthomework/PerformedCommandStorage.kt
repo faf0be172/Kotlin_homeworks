@@ -4,23 +4,23 @@ import java.util.Stack
 
 class PerformedCommandStorage {
     private val actions: Stack<Action> = Stack()
-    private val arrayDeque: ArrayDeque<Int> = ArrayDeque()
+    private val _arrayDeque: ArrayDeque<Int> = ArrayDeque()
 
-    val getDeque: ArrayDeque<Int>
-        get() = this.arrayDeque
+    val arrayDeque: ArrayDeque<Int>
+        get() = _arrayDeque
 
     fun printCurrentPlacement() {
         println("[" + this.arrayDeque.joinToString(separator = ", ") + "]")
     }
 
-    fun addOperation(operation: Action) {
-        actions.addElement(operation)
+    fun addAction(action: Action) {
+        actions.addElement(action)
     }
 
-    fun undoLastOperation() {
+    fun undoLastAction() {
         if (actions.isNotEmpty()) {
             actions.lastElement().undo()
             actions.removeLast()
-        } else println("Empty operation stack, operation failed")
+        } else println("Empty actions stack, action failed")
     }
 }
