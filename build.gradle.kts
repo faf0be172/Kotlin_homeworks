@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     kotlin("jvm") version "1.4.30"
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
+    id("org.jetbrains.dokka") version "1.4.20"
     application
 }
 
@@ -16,7 +18,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit"))
-
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
 }
 
@@ -32,6 +33,22 @@ tasks.withType<KotlinCompile>() {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf("-Werror")
+    }
+}
+
+tasks.dokkaHtml {
+    dokkaSourceSets {
+        outputDirectory.set(buildDir.resolve("dokka"))
+        moduleName.set("PerformedCommandStorage")
+        configureEach {
+            platform.set(org.jetbrains.dokka.Platform.jvm)
+
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/faf0be172/Kotlin_homeworks/tree/master/src/main/kotlin"))
+                remoteLineSuffix.set("#L")
+            }
+        }
     }
 }
 
