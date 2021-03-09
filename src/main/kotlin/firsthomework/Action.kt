@@ -48,6 +48,9 @@ class PushBack(value: Int, private val storage: PerformedCommandStorage) : Actio
  * @param[indexFrom] is an index of element to move
  * @param[indexTo] is an index to move to
  * @property[PerformedCommandStorage] is a storage contains the changeable [ArrayDeque]
+ *
+ * Method [moveElement] removes element from [indexFrom], moves left certain elements
+ * and inserts removed element on [indexTo]
  */
 
 class MoveElement(

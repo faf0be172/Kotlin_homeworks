@@ -12,10 +12,6 @@ fun ArrayDeque<Int>.moveElement(indexFrom: Int, indexTo: Int) {
         throw ArrayIndexOutOfBoundsException("Some of indexes are out of bounds")
     }
     if (indexFrom != indexTo) {
-        /**
-         * Method removes element from [indexFrom], moves left certain elements
-         * and inserts removed element on [indexTo]
-         */
         val movingElement = this[indexFrom]
         this.removeAt(indexFrom)
         this.add(indexTo, movingElement)

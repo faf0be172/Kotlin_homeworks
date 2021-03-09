@@ -39,7 +39,7 @@ tasks.withType<KotlinCompile>() {
 tasks.dokkaHtml {
     dokkaSourceSets {
         outputDirectory.set(buildDir.resolve("dokka"))
-        moduleName.set("PerformedCommandStorage")
+        moduleName.set("kotlin_homeworks")
         configureEach {
             platform.set(org.jetbrains.dokka.Platform.jvm)
 
