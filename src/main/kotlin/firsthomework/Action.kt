@@ -50,7 +50,6 @@ class PushBack(value: Int, private val storage: PerformedCommandStorage) : Actio
  * @property[PerformedCommandStorage] is a storage contains the changeable [ArrayDeque]
  */
 
-
 class MoveElement(
     private val indexFrom: Int,
     private val indexTo: Int,
