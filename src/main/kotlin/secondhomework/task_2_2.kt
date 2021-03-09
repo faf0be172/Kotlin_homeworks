@@ -2,8 +2,8 @@ package secondhomework
 
 import kotlin.random.Random
 
-fun createRandomArray(arraySize: Int): IntArray {
-    return IntArray(arraySize) { Random.nextInt(from = 1, until = 6) }
+fun createRandomArray(arraySize: Int, rangeFrom: Int, rangeTo: Int): IntArray {
+    return IntArray(arraySize) { Random.nextInt(from = rangeFrom, until = rangeTo) }
 }
 
 fun IntArray.removeDuplicateElements(): IntArray {
@@ -13,7 +13,7 @@ fun IntArray.removeDuplicateElements(): IntArray {
 }
 
 fun main() {
-    val randomArray = createRandomArray(arraySize = 13)
+    val randomArray = createRandomArray(arraySize = 13, rangeFrom = 1, rangeTo = 6)
     println("Array: " + randomArray.joinToString(separator = ", "))
     val processedArray = randomArray.removeDuplicateElements()
     println("Processed array: " + processedArray.joinToString(separator = ", "))
