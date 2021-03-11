@@ -1,6 +1,12 @@
 package firsthomework
 
 import java.util.Stack
+import java.io.File
+import java.io.FileWriter
+
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class PerformedCommandStorage {
     private val actions: Stack<Action> = Stack()
@@ -17,9 +23,24 @@ class PerformedCommandStorage {
         actions.addElement(action)
     }
 
+    fun serializeActions(fileName: String) {
+        val newFile = FileWriter(fileName)
+        newFile.write(Json.encodeToString(actions.toList()))
+        newFile.flush()
+    }
+
+    fun deserializeActions(path: String) {
+        val stringInJsonFormat = File(path).inputStream().readAllBytes().toString(Charsets.UTF_8)
+        val listWithActions = Json.decodeFromString<List<Action>>(stringInJsonFormat)
+
+        for (action in listWithActions) {
+            action.addTo(this)
+        }
+    }
+
     fun undoLastAction() {
         if (actions.isNotEmpty()) {
-            actions.lastElement().undo()
+            actions.lastElement().undo(this)
             actions.removeLast()
         } else println("Empty actions stack, action failed")
     }

@@ -1,42 +1,48 @@
 package firsthomework
 
-interface Action {
-    fun undo()
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class Action {
+    abstract fun addTo(storage: PerformedCommandStorage)
+    abstract fun undo(storage: PerformedCommandStorage)
 }
 
-class PushFront(value: Int, private val storage: PerformedCommandStorage) : Action {
-    init {
+@Serializable
+class PushFront(val value: Int) : Action() {
+    override fun addTo(storage: PerformedCommandStorage) {
         storage.arrayDeque.addFirst(value)
         storage.addAction(this)
     }
 
-    override fun undo() {
+    override fun undo(storage: PerformedCommandStorage) {
         storage.arrayDeque.removeFirst()
     }
 }
 
-class PushBack(value: Int, private val storage: PerformedCommandStorage) : Action {
-    init {
+@Serializable
+class PushBack(val value: Int) : Action() {
+    override fun addTo(storage: PerformedCommandStorage) {
         storage.arrayDeque.addLast(value)
         storage.addAction(this)
     }
 
-    override fun undo() {
-        storage.arrayDeque.removeLast()
+    override fun undo(storage: PerformedCommandStorage) {
+        storage.arrayDeque.removeFirst()
     }
 }
 
+@Serializable
 class MoveElement(
-    private val indexFrom: Int,
-    private val indexTo: Int,
-    private val storage: PerformedCommandStorage
-) : Action {
-    init {
+    val indexFrom: Int,
+    val indexTo: Int,
+) : Action() {
+    override fun addTo(storage: PerformedCommandStorage) {
         storage.arrayDeque.moveElement(indexFrom, indexTo)
         storage.addAction(this)
     }
 
-    override fun undo() {
+    override fun undo(storage: PerformedCommandStorage) {
         storage.arrayDeque.moveElement(indexTo, indexFrom)
     }
 }
