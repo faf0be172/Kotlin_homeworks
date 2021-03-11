@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class Action {
-    abstract fun addTo(storage: PerformedCommandStorage)
     abstract fun undo(storage: PerformedCommandStorage)
+    abstract fun process(storage: PerformedCommandStorage)
 }
 
 @Serializable
-class PushFront(val value: Int) : Action() {
-    override fun addTo(storage: PerformedCommandStorage) {
+class PushFront(private val value: Int) : Action() {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addFirst(value)
         storage.addAction(this)
     }
@@ -21,23 +21,23 @@ class PushFront(val value: Int) : Action() {
 }
 
 @Serializable
-class PushBack(val value: Int) : Action() {
-    override fun addTo(storage: PerformedCommandStorage) {
+class PushBack(private val value: Int) : Action() {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addLast(value)
         storage.addAction(this)
     }
 
     override fun undo(storage: PerformedCommandStorage) {
-        storage.arrayDeque.removeFirst()
+        storage.arrayDeque.removeLast()
     }
 }
 
 @Serializable
 class MoveElement(
-    val indexFrom: Int,
-    val indexTo: Int,
+    private val indexFrom: Int,
+    private val indexTo: Int
 ) : Action() {
-    override fun addTo(storage: PerformedCommandStorage) {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.moveElement(indexFrom, indexTo)
         storage.addAction(this)
     }
