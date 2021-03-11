@@ -15,12 +15,12 @@ class PerformedCommandStorage {
     val arrayDeque: ArrayDeque<Int>
         get() = _arrayDeque
 
-    fun printCurrentPlacement() {
-        println("[" + this.arrayDeque.joinToString(separator = ", ") + "]")
-    }
-
     fun addAction(action: Action) {
         actions.addElement(action)
+    }
+
+    fun printCurrentPlacement() {
+        println("[" + this.arrayDeque.joinToString(separator = ", ") + "]")
     }
 
     fun serializeActions(fileName: String) {
