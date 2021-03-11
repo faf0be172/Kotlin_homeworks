@@ -18,7 +18,7 @@ sealed class Action {
  * @param[value] is a new element to push in
  * @property[PerformedCommandStorage] is a storage contains the changeable [ArrayDeque]
  */
-      
+
 @Serializable
 class PushFront(private val value: Int) : Action() {
     override fun process(storage: PerformedCommandStorage) {
