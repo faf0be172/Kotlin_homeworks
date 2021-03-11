@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     kotlin("jvm") version "1.4.30"
     kotlin("plugin.serialization") version "1.4.31"
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
+    id("org.jetbrains.dokka") version "1.4.20"
     application
 }
 
@@ -23,6 +25,8 @@ dependencies {
 
 detekt {
     failFast = true // fail build on any finding
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
 }
 
 tasks.test {
@@ -33,6 +37,22 @@ tasks.withType<KotlinCompile>() {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf("-Werror")
+    }
+}
+
+tasks.dokkaHtml {
+    dokkaSourceSets {
+        outputDirectory.set(buildDir.resolve("dokka"))
+        moduleName.set("kotlin_homeworks")
+        configureEach {
+            platform.set(org.jetbrains.dokka.Platform.jvm)
+
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/faf0be172/Kotlin_homeworks/tree/master/src/main/kotlin"))
+                remoteLineSuffix.set("#L")
+            }
+        }
     }
 }
 
