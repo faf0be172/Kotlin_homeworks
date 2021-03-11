@@ -30,8 +30,7 @@ class PerformedCommandStorage {
     }
 
     fun addAction(action: Action) = actions.addElement(action)
-
-
+    
     fun serializeActions(fileName: String) {
         val newFile = FileWriter(fileName)
         newFile.write(Json.encodeToString(actions.toList()))
