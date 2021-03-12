@@ -1,6 +1,7 @@
 package firsthomework
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 /**
  * Common sealed class [Action] for [PushFront], [PushBack] and [MoveElement]
@@ -20,6 +21,7 @@ sealed class Action {
  */
 
 @Serializable
+@SerialName("PushFront")
 class PushFront(private val value: Int) : Action() {
     override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addFirst(value)
@@ -38,6 +40,7 @@ class PushFront(private val value: Int) : Action() {
 */
 
 @Serializable
+@SerialName("PushBack")
 class PushBack(private val value: Int) : Action() {
     override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addLast(value)
@@ -60,6 +63,7 @@ class PushBack(private val value: Int) : Action() {
  */
 
 @Serializable
+@SerialName("MoveElement")
 class MoveElement(
     private val indexFrom: Int,
     private val indexTo: Int
