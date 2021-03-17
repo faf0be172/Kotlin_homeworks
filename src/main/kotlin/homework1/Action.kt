@@ -1,4 +1,4 @@
-package firsthomework
+package homework1
 
 /**
  * Common interface [Action] for [PushFront], [PushBack] and [MoveElement]
