@@ -1,1 +1,1 @@
-[{"type":"PushBack","value":1},{"type":"PushBack","value":2},{"type":"PushBack","value":3},{"type":"PushBack","value":4}]
+[{"type":"PushBack","value":1},{"type":"PushBack","value":2},{"type":"PushBack","value":3},{"type":"PushBack","value":4},{"type":"PushBack","value":5},{"type":"PushFront","value":8},{"type":"PushFront","value":7},{"type":"PushFront","value":6},{"type":"MoveElement","indexFrom":1,"indexTo":7},{"type":"MoveElement","indexFrom":0,"indexTo":6},{"type":"MoveElement","indexFrom":0,"indexTo":7}]
