@@ -34,6 +34,9 @@ detekt {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+    }
 }
 
 tasks.withType<KotlinCompile>() {
