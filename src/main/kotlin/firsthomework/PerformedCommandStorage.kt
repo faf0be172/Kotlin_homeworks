@@ -34,7 +34,7 @@ class PerformedCommandStorage {
     fun serializeActions(fileName: String) {
         val newFile = FileWriter(fileName)
         newFile.write(Json.encodeToString(actions.toList()))
-        newFile.flush()
+        newFile.close()
     }
 
     fun deserializeActions(fileName: String) {
