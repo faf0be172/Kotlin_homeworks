@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 internal class ArrayDequeMoveElementTest {
 
     @Test
-    fun testMoveSimpleElement() {
+    fun testMoveElementSimple() {
         val testArrayDeque: ArrayDeque<Int> = ArrayDeque()
         testArrayDeque.addAll(1..5)
         testArrayDeque.moveElement(indexFrom = 2, indexTo = 4)
@@ -15,7 +15,7 @@ internal class ArrayDequeMoveElementTest {
     }
 
     @Test
-    fun testMoveComplexElement() {
+    fun testMoveElementComplicated() {
         val testArrayDeque: ArrayDeque<Int> = ArrayDeque()
         testArrayDeque.addAll(1..5)
         testArrayDeque.moveElement(indexFrom = 2, indexTo = 4)
