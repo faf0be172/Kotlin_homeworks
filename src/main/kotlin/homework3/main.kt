@@ -8,7 +8,7 @@ fun createKtFile(configPath: String, packagePath: String) {
     val generator = TestGenerator(configPath)
     try {
         generator.file.writeTo(File(packagePath))
-    } catch(error: IllegalArgumentException) {
+    } catch (error: IllegalArgumentException) {
         throw IllegalArgumentException("Incorrect kt file path")
     }
 }
