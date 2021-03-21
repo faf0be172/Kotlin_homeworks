@@ -1,0 +1,32 @@
+package homework3
+
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.ClassName
+
+class TestGenerator(configPath: String) {
+
+    private val _testsConfiguration = deserializeYamlData(configPath)
+    private val packageName = _testsConfiguration.packageName
+    private val className = _testsConfiguration.className
+    private val functions = _testsConfiguration.yamlFunctions
+
+    val file: FileSpec
+        get() = FileSpec.builder(this.packageName, "${this.className}Test")
+            .addType(createTestClass())
+            .build()
+
+    private fun createFunction(function: YamlFunction) = FunSpec.builder(function.name)
+        .addAnnotation(ClassName("org.junit.jupiter.api", "Test"))
+        .build()
+
+    private fun createTestClass(): TypeSpec {
+        val testClass = TypeSpec.classBuilder("${this.className}Test")
+            .addModifiers(KModifier.INTERNAL)
+        for (function in this.functions)
+            testClass.addFunction(createFunction(function))
+        return testClass.build()
+    }
+}

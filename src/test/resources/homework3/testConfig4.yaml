@@ -1,0 +1,5 @@
+package name: "PcsPackage"
+functions:
+  - name: "serializeActions"
+  - name: "deserializeActions"
+  - name: "undoLastAction"
