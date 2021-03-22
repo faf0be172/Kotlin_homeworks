@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
+import java.util.stream.Stream
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.createTempDirectory
 
@@ -15,7 +16,7 @@ internal class TestGeneratorTest {
 
     companion object {
         @JvmStatic
-        fun getCorrectArguments(): List<Arguments> = listOf(
+        fun getCorrectArguments(): Stream<Arguments> = Stream.of(
             Arguments.of(
                 TestGeneratorTest::class.java
                     .getResource("PcsPackage/ActionsTest.kt").path,
