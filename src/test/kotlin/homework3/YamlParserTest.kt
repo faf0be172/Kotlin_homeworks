@@ -48,14 +48,12 @@ internal class TestYamlParser {
 
     @MethodSource("getCorrectArguments")
     @ParameterizedTest
-    @DisplayName("Parser")
     fun testParser(expected: TestConfiguration, actual: TestConfiguration) {
         assertEquals(expected, actual)
     }
 
     @MethodSource("getIncorrectArguments")
     @ParameterizedTest
-    @DisplayName("Parser exceptions")
     fun testParserExceptions(path: String) {
         assertThrows<IllegalStateException> {
             deserializeYamlData(path)

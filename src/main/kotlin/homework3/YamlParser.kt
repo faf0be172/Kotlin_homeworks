@@ -22,14 +22,18 @@ data class TestConfiguration(
     val yamlFunctions: List<YamlFunction>
 )
 
-fun deserializeYamlData(fileName: String): TestConfiguration {
-    val stringInYamlFormat = try {
+fun saveOpen(fileName: String): String {
+    return try {
         File(fileName).readText()
     } catch (error: FileNotFoundException) {
         throw error("Yaml config not found")
     }
-    try {
-        return Yaml.default.decodeFromString(stringInYamlFormat)
+}
+
+fun deserializeYamlData(fileName: String): TestConfiguration {
+    val stringInYamlFormat = saveOpen(fileName)
+    return try {
+         Yaml.default.decodeFromString(stringInYamlFormat)
     } catch (error: MissingRequiredPropertyException) {
         throw error("any properties in yaml config are missing")
     } catch (error: UnknownPropertyException) {
