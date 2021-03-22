@@ -47,7 +47,9 @@ internal class TestGeneratorTest {
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
         val tempDirectory = createTempDirectory("generatorTests")
         createKtFile(configPath, tempDirectory.toString())
-        assertEquals(File(expectedFilePath).readText(), File(tempDirectory.toAbsolutePath().toString() + "/PcsPackage/$actualFileName.kt").readText())
+        assertEquals(File(expectedFilePath).readText(),
+            File(tempDirectory.toAbsolutePath().toString() +
+                    "/PcsPackage/$actualFileName.kt").readText())
     }
 
     @MethodSource("getIncorrectArguments")
