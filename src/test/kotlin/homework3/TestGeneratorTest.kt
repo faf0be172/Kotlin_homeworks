@@ -19,14 +19,14 @@ internal class TestGeneratorTest {
         fun getCorrectArguments(): Stream<Arguments> = Stream.of(
             Arguments.of(
                 TestGeneratorTest::class.java
-                    .getResource("PcsPackage/ActionsTest.kt").path,
+                    .getResource("ActionsTest.kt").path,
                 TestGeneratorTest::class.java
                     .getResource("testConfig1.yaml").path,
                 "ActionsTest"
             ),
             Arguments.of(
                 TestGeneratorTest::class.java
-                    .getResource("PcsPackage/PerformedCommandStorageTest.kt").path,
+                    .getResource("PerformedCommandStorageTest.kt").path,
                 TestGeneratorTest::class.java
                     .getResource("testConfig2.yaml").path,
                 "PerformedCommandStorageTest"
@@ -47,18 +47,18 @@ internal class TestGeneratorTest {
     @ParameterizedTest
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
         val tempDirectory = createTempDirectory("generatorTests")
-        createKtFile(configPath, tempDirectory.toString())
+        createKtFile(configPath, "$tempDirectory/$actualFileName.kt")
         assertEquals(
             File(expectedFilePath).readText().replace("\r\n", "\n"),
             File(tempDirectory.toAbsolutePath().toString() +
-                    "/PcsPackage/$actualFileName.kt").readText())
+                    "/$actualFileName.kt").readText())
     }
 
     @MethodSource("getIncorrectArguments")
     @ParameterizedTest
     fun testGeneratorExceptions(configPath: String) {
         assertThrows<IllegalStateException> {
-            createKtFile(configPath, "temp")
+            createKtFile(configPath, "temp.kt")
         }
     }
 }
