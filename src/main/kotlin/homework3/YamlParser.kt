@@ -9,8 +9,6 @@ import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.FileNotFoundException
 
-
-
 @Serializable
 data class YamlFunction(val name: String)
 
