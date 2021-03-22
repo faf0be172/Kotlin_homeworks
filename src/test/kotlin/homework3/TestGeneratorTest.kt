@@ -7,6 +7,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.createTempDirectory
+import kotlin.io.path.deleteExisting
+import kotlin.io.path.deleteIfExists
 
 @DisplayName("Test generator")
 internal class TestGeneratorTest {
@@ -39,12 +43,13 @@ internal class TestGeneratorTest {
         )
     }
 
+    @ExperimentalPathApi
     @MethodSource("getCorrectArguments")
     @ParameterizedTest
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
-        createKtFile(configPath, "temp")
-        assertEquals(File(expectedFilePath).readText(), File("temp/PcsPackage/$actualFileName.kt").readText())
-        File("temp/PcsPackage/$actualFileName.kt").delete()
+        val tempDirectory = createTempDirectory()
+        createKtFile(configPath, tempDirectory.toString())
+        assertEquals(File(expectedFilePath).readText(), File("$tempDirectory/PcsPackage/$actualFileName.kt").readText())
     }
 
     @MethodSource("getIncorrectArguments")
