@@ -48,7 +48,8 @@ internal class TestGeneratorTest {
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
         val tempDirectory = createTempDirectory("generatorTests")
         createKtFile(configPath, tempDirectory.toString())
-        assertEquals(File(expectedFilePath).readText(),
+        assertEquals(
+            File(expectedFilePath).readText().replace("\r\n", "\n"),
             File(tempDirectory.toAbsolutePath().toString() +
                     "/PcsPackage/$actualFileName.kt").readText())
     }
