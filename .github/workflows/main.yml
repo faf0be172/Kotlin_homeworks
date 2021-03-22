@@ -21,9 +21,10 @@ jobs:
       - name: Run detekt
         run: ./gradlew detekt
 
-      uses: actions/upload-artifact@v2
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
         with:
-          name: Package
+          name: artifactPackage
           path: build/libs
 
   build-on-ubuntu:
