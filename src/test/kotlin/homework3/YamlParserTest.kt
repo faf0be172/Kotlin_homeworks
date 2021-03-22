@@ -42,7 +42,8 @@ internal class TestYamlParser {
             Arguments.of(TestYamlParser::class.java
                 .getResource("testConfig3.yaml").path),
             Arguments.of(TestYamlParser::class.java
-                .getResource("testConfig4.yaml").path)
+                .getResource("testConfig4.yaml").path),
+            Arguments.of("non_existentFile.yaml")
         )
     }
 
