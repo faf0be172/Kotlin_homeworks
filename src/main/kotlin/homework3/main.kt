@@ -4,6 +4,12 @@ import java.io.File
 import java.lang.IllegalArgumentException
 import java.util.Scanner
 
+/**
+ * [createKtFile] uses [deserializeYamlData] to parse .yaml config
+ * and [TestGenerator] to create file
+ * [createKtFile] creates new package with kt. file in specified directory
+ */
+
 fun createKtFile(configPath: String, packagePath: String) {
     val generator = TestGenerator(configPath)
     try {

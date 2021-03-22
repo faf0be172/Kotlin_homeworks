@@ -6,6 +6,14 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.ClassName
 
+/**
+ * [TestGenerator] uses [deserializeYamlData] and create .kt file
+ * @property[_testsConfiguration] is used to store specified config
+ * @property[file] contains [FileSpec] object ready to write to the .kt file
+ * @return [createFunction] kotlinpoet function to insert to the test class
+ * @return [createTestClass] kotlinpoet class to insert to the .kt file
+ */
+
 class TestGenerator(configPath: String) {
 
     private val _testsConfiguration = deserializeYamlData(configPath)

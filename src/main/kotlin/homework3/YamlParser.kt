@@ -9,8 +9,15 @@ import kotlinx.serialization.decodeFromString
 import java.io.File
 import java.io.FileNotFoundException
 
+
+
 @Serializable
 data class YamlFunction(val name: String)
+
+/**
+ * [TestConfiguration] is a auxiliary data class and used to deserialize .yaml files with specified configuration
+ * @param[yamlFunctions] contains the list of auxiliary [YamlFunction] data classes
+ */
 
 @Serializable
 data class TestConfiguration(
@@ -22,7 +29,12 @@ data class TestConfiguration(
     val yamlFunctions: List<YamlFunction>
 )
 
-fun saveOpen(fileName: String): String {
+/**
+ * [safeOpen] is used to safely open .yaml file
+ * @return content of .yaml file
+ */
+
+fun safeOpen(fileName: String): String {
     return try {
         File(fileName).readText()
     } catch (error: FileNotFoundException) {
@@ -30,8 +42,13 @@ fun saveOpen(fileName: String): String {
     }
 }
 
+/**
+ * [deserializeYamlData] is used to parse .yaml file and get specified configuration
+ * @return data class with specified configuration
+ */
+
 fun deserializeYamlData(fileName: String): TestConfiguration {
-    val stringInYamlFormat = saveOpen(fileName)
+    val stringInYamlFormat = safeOpen(fileName)
     return try {
          Yaml.default.decodeFromString(stringInYamlFormat)
     } catch (error: MissingRequiredPropertyException) {
