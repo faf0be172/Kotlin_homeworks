@@ -9,8 +9,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.createTempDirectory
-import kotlin.io.path.deleteExisting
-import kotlin.io.path.deleteIfExists
 
 @DisplayName("Test generator")
 internal class TestGeneratorTest {
@@ -49,7 +47,7 @@ internal class TestGeneratorTest {
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
         val tempDirectory = createTempDirectory()
         createKtFile(configPath, tempDirectory.toString())
-        assertEquals(File(expectedFilePath).readText(), File("$tempDirectory/PcsPackage/$actualFileName.kt").readText())
+        assertEquals(File(expectedFilePath).readText(), File("${tempDirectory.toAbsolutePath()}/PcsPackage/$actualFileName.kt").readText())
     }
 
     @MethodSource("getIncorrectArguments")
