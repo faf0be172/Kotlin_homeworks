@@ -45,9 +45,9 @@ internal class TestGeneratorTest {
     @MethodSource("getCorrectArguments")
     @ParameterizedTest
     fun testGenerator(expectedFilePath: String, configPath: String, actualFileName: String) {
-        val tempDirectory = createTempDirectory()
+        val tempDirectory = createTempDirectory("generatorTests")
         createKtFile(configPath, tempDirectory.toString())
-        assertEquals(File(expectedFilePath).readText(), File("${tempDirectory.toAbsolutePath()}/PcsPackage/$actualFileName.kt").readText())
+        assertEquals(File(expectedFilePath).readText(), File(tempDirectory.toAbsolutePath().toString() + "/PcsPackage/$actualFileName.kt").readText())
     }
 
     @MethodSource("getIncorrectArguments")
