@@ -1,8 +1,7 @@
 package firsthomework
 
-const val TEST_FILENAME = "storageData.json"
-
 fun testStorage() {
+    val testFileName = object {}.javaClass.getResource("storageData.json").path
     val testingStorage = PerformedCommandStorage()
     testingStorage.printCurrentPlacement()
     testingStorage.undoLastAction()
@@ -19,10 +18,10 @@ fun testStorage() {
     testingStorage.printCurrentPlacement()
     testingStorage.undoLastAction()
     testingStorage.printCurrentPlacement()
-    testingStorage.serializeActions(TEST_FILENAME)
+    testingStorage.serializeActions(testFileName)
 
     val loadedTestingStorage = PerformedCommandStorage()
-    loadedTestingStorage.deserializeActions(TEST_FILENAME)
+    loadedTestingStorage.deserializeActions(testFileName)
     println("Loaded storage:")
     loadedTestingStorage.printCurrentPlacement()
     loadedTestingStorage.undoLastAction()
