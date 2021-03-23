@@ -38,7 +38,7 @@ class PerformedCommandStorage {
     }
 
     fun deserializeActions(fileName: String) {
-        val stringInJsonFormat = File(fileName).inputStream().readAllBytes().toString(Charsets.UTF_8)
+        val stringInJsonFormat = File(fileName).readText()
         val listWithActions = Json.decodeFromString<List<Action>>(stringInJsonFormat)
 
         for (action in listWithActions) {
