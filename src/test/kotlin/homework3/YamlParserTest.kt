@@ -1,11 +1,16 @@
 package homework3
 
+import com.charleskorn.kaml.MissingRequiredPropertyException
+import com.charleskorn.kaml.UnknownPropertyException
+import homework3.TestConfiguration.Companion.deserializeYamlData
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.io.FileNotFoundException
 
 @DisplayName("Yaml parser")
 internal class TestYamlParser {
@@ -21,8 +26,8 @@ internal class TestYamlParser {
                     YamlFunction("pushFront"),
                     YamlFunction("moveElement")
                 )
-            ), deserializeYamlData(TestYamlParser::class.java
-                .getResource("testConfig1.yaml").path)
+            ), TestYamlParser::class.java
+                .getResource("YamlParserTest/paramTest1/testConfig.yaml").path
             ),
             Arguments.of(TestConfiguration(
                 "PcsPackage",
@@ -32,31 +37,44 @@ internal class TestYamlParser {
                     YamlFunction("deserializeActions"),
                     YamlFunction("undoLastAction")
                 )
-            ), deserializeYamlData(TestYamlParser::class.java
-                .getResource("testConfig2.yaml").path)
+            ), TestYamlParser::class.java
+                .getResource("YamlParserTest/paramTest2/testConfig.yaml").path
         )
-        )
-
-        @JvmStatic
-        fun getIncorrectArguments(): List<Arguments> = listOf(
-            Arguments.of(TestYamlParser::class.java
-                .getResource("testConfig3.yaml").path),
-            Arguments.of(TestYamlParser::class.java
-                .getResource("testConfig4.yaml").path),
-            Arguments.of("non_existentFile.yaml")
         )
     }
 
     @MethodSource("getCorrectArguments")
     @ParameterizedTest
-    fun testParser(expected: TestConfiguration, actual: TestConfiguration) {
+    fun testParser(expected: TestConfiguration, actualPath: String) {
+        val actual = deserializeYamlData(actualPath)
         assertEquals(expected, actual)
     }
 
-    @MethodSource("getIncorrectArguments")
-    @ParameterizedTest
-    fun testParserExceptions(path: String) {
-        assertThrows<IllegalStateException> {
+    @DisplayName("Incorrect properties in .yaml file")
+    @Test
+    fun testParserExceptionIncorrectProperties() {
+        val path = javaClass.getResource(
+            "YamlParserTest/incorrectPropertiesTest/testConfig.yaml").path
+        assertThrows<UnknownPropertyException> {
+            deserializeYamlData(path)
+        }
+    }
+
+    @DisplayName("Missing properties in .yaml file")
+    @Test
+    fun testParserExceptionMissingProperties() {
+        val path = javaClass.getResource(
+            "YamlParserTest/missingPropertiesTest/testConfig.yaml").path
+        assertThrows<MissingRequiredPropertyException> {
+            deserializeYamlData(path)
+        }
+    }
+
+    @DisplayName("Missing properties in .yaml file")
+    @Test
+    fun testParserExceptionConfigNotFound() {
+        val path = "nonExistentFile.yaml"
+        assertThrows<FileNotFoundException> {
             deserializeYamlData(path)
         }
     }

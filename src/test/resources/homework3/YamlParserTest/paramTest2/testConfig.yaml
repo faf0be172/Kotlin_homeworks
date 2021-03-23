@@ -1,0 +1,6 @@
+package name: "PcsPackage"
+class name: PerformedCommandStorage
+functions:
+  - name: "serializeActions"
+  - name: "deserializeActions"
+  - name: "undoLastAction"
