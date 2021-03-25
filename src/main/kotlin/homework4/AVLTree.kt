@@ -1,6 +1,6 @@
 package homework4
 
-class AVLTree <Key: Comparable<Key>, Value> {
+class AVLTree <Key : Comparable<Key>, Value> {
     var root: AVLNode<Key, Value>? = null
 
     fun put(key: Key, value: Value): Value? {

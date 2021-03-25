@@ -2,13 +2,12 @@ package homework4
 
 import kotlin.math.max
 
-class AVLNode <Key: Comparable<Key>, Value> (private var key: Key, private var value: Value) {
+class AVLNode <Key : Comparable<Key>, Value> (private var key: Key, private var value: Value) {
 
     private val absoluteCriticalBalanceFactor = 2
     private var height = 0
     private var leftChild: AVLNode <Key, Value>? = null
     private var rightChild: AVLNode <Key, Value>? = null
-
 
     private fun fixHeight() {
         val leftSubtreeHeight = if (this.leftChild?.height != null) this.leftChild!!.height else 0
@@ -28,15 +27,17 @@ class AVLNode <Key: Comparable<Key>, Value> (private var key: Key, private var v
                 if (this.rightChild == null) {
                     this.rightChild = AVLNode(key, value)
                     null
-                } else
+                } else {
                     this.rightChild!!.recursivePut(key, value)
+                }
             }
             key < this.key -> {
                 if (this.leftChild == null) {
                     this.leftChild = AVLNode(key, value)
                     null
-                } else
+                } else {
                     this.leftChild!!.recursivePut(key, value)
+                }
             }
             else -> {
                 val oldValue = this.value
@@ -111,21 +112,25 @@ class AVLNode <Key: Comparable<Key>, Value> (private var key: Key, private var v
 
     fun balanceSubTree(): AVLNode<Key, Value>? {
         fixHeight()
-        if (getBalanceFactor() == absoluteCriticalBalanceFactor) {
-            //  getBalanceFactor() > 0 then this.rightChild.height > 0
-            if (this.rightChild!!.getBalanceFactor() < 0) {
-                this.rightChild = this.rightChild!!.rotateSubTreeRight()
+        return when {
+            getBalanceFactor() == absoluteCriticalBalanceFactor -> {
+                //  getBalanceFactor() > 0 then this.rightChild.height > 0
+                if (this.rightChild!!.getBalanceFactor() < 0) {
+                    this.rightChild = this.rightChild!!.rotateSubTreeRight()
+                }
+                rotateSubTreeLeft()
             }
-            return rotateSubTreeLeft()
-        }
-        if (getBalanceFactor() == -absoluteCriticalBalanceFactor) {
-            //  getBalanceFactor() < 0 then this.leftChild.height > 0
-            if (this.leftChild!!.getBalanceFactor() > 0) {
-                this.leftChild = this.leftChild!!.rotateSubTreeLeft()
+
+            getBalanceFactor() == -absoluteCriticalBalanceFactor -> {
+                //  getBalanceFactor() < 0 then this.leftChild.height > 0
+                if (this.leftChild!!.getBalanceFactor() > 0) {
+                    this.leftChild = this.leftChild!!.rotateSubTreeLeft()
+                }
+                rotateSubTreeRight()
             }
-            return rotateSubTreeRight()
+
+            else -> this
         }
-        return this
     }
 
     fun recursiveRemove(key: Key): AVLNode<Key, Value>? {
