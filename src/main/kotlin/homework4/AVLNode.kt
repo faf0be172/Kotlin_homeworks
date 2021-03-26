@@ -2,8 +2,6 @@ package homework4
 
 import kotlin.math.max
 
-class Entry<Key, Value>(override val key: Key, override val value: Value) : Map.Entry<Key, Value>
-
 class AVLNode <Key : Comparable<Key>, Value> (private var key: Key, private var value: Value) {
 
     private val absoluteCriticalBalanceFactor = 2

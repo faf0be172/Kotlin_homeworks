@@ -77,6 +77,16 @@ internal class AVLTreeTest {
         assertEquals(listOf(Pair("a", "aaa"), Pair("b", "bbb")), testMap.getEntries())
     }
 
+    @Test
+    fun testPutAllLacking() {
+        val testMap1: AVLTree <String, String> = AVLTree()
+        val testMap2: AVLTree <String, String> = AVLTree()
+        testMap1.put("a", "aaa")
+        testMap2.put("b", "bbb")
+        testMap1.putAllLacking(testMap2)
+        assertEquals("bbb", testMap1.get("b"))
+    }
+
     @DisplayName("Contains key")
     @ParameterizedTest
     @MethodSource("getContainableKeyArguments")
