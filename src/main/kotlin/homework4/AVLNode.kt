@@ -2,6 +2,8 @@ package homework4
 
 import kotlin.math.max
 
+class Entry<Key, Value>(override val key: Key, override val value: Value) : Map.Entry<Key, Value>
+
 class AVLNode <Key : Comparable<Key>, Value> (private var key: Key, private var value: Value) {
 
     private val absoluteCriticalBalanceFactor = 2
@@ -168,5 +170,23 @@ class AVLNode <Key : Comparable<Key>, Value> (private var key: Key, private var 
             }
             else -> node.rightChild!!
         }
+    }
+
+    fun recursiveGetKeys(keys: MutableList<Key>) {
+        keys.add(this.key)
+        this.leftChild?.recursiveGetKeys(keys)
+        this.rightChild?.recursiveGetKeys(keys)
+    }
+
+    fun recursiveGetValues(values: MutableList<Value>) {
+        values.add(this.value)
+        this.leftChild?.recursiveGetValues(values)
+        this.rightChild?.recursiveGetValues(values)
+    }
+
+    fun recursiveGetEntries(entries: MutableList<Pair <Key, Value>>) {
+        entries.add(Pair(this.key, this.value))
+        this.leftChild?.recursiveGetEntries(entries)
+        this.rightChild?.recursiveGetEntries(entries)
     }
 }

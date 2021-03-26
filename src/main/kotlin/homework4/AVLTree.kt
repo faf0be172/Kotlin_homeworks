@@ -50,4 +50,37 @@ class AVLTree <Key : Comparable<Key>, Value> {
             else -> null
         }
     }
+
+    fun getKeys(): List<Key> {
+        val list = mutableListOf<Key>()
+        return when {
+            this.root != null -> {
+                this.root!!.recursiveGetKeys(list)
+                list
+            }
+            else -> list
+        }
+    }
+
+    fun getValues(): List<Value> {
+        val list = mutableListOf<Value>()
+        return when {
+            this.root != null -> {
+                this.root!!.recursiveGetValues(list)
+                list
+            }
+            else -> list
+        }
+    }
+
+    fun getEntries(): List<Pair<Key, Value>> {
+        val list = mutableListOf<Pair<Key, Value>>()
+        return when {
+            this.root != null -> {
+                this.root!!.recursiveGetEntries(list)
+                list
+            }
+            else -> list
+        }
+    }
 }
