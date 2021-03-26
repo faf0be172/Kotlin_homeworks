@@ -38,7 +38,7 @@ class BorNode {
                 if (string.length == position + 1) {
                     if (this.edges[string[position]]!!.edges.isEmpty()) {
                         this.edges.remove(string[position])
-                        this.edges[string[position]]!!.recursiveRemove(string.dropLast(1), position)
+                        false
                     } else true
                 } else {
                     this.edges[string[position]]!!.recursiveRemove(string, position + 1)

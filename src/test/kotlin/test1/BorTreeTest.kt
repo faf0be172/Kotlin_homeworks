@@ -1,6 +1,7 @@
 package test1
 
 import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -26,5 +27,14 @@ internal class BorTreeTest {
         assertEquals(expected, testBorTree.contains(value))
     }
 
-    
+    @Test
+    fun testRemove() {
+        val testBorTree = BorTree()
+        testBorTree.add("he")
+        testBorTree.add("she")
+        testBorTree.add("his")
+        testBorTree.add("hers")
+        testBorTree.remove("his")
+        assertEquals(false, testBorTree.contains("his"))
+    }
 }
