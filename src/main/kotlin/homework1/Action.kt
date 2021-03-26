@@ -1,4 +1,4 @@
-package firsthomework
+package homework1
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
