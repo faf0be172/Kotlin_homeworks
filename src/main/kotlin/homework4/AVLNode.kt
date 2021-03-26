@@ -134,39 +134,52 @@ class AVLNode <Key : Comparable<Key>, Value> (private var key: Key, private var 
     }
 
     fun recursiveRemove(key: Key): AVLNode<Key, Value>? {
-        // required value exactly is in tree
         return when {
-            key < this.key -> this.leftChild?.recursiveRemove(key)
-            key > this.key -> this.rightChild?.recursiveRemove(key)
+            key < this.key -> {
+                this.leftChild = this.leftChild?.recursiveRemove(key)
+                this
+            }
+            key > this.key -> {
+                this.rightChild = this.rightChild?.recursiveRemove(key)
+                this
+            }
             else -> {
                 when {
-                    this.rightChild != null -> {
-                        val minElement = findSubTreeMin(this.rightChild!!)
-                        minElement.rightChild = deleteMinInSubTree(this.rightChild!!)
-                        minElement.leftChild = this.leftChild
-
-                        minElement.balanceSubTree()
+                    this.leftChild == null -> {
+                        this.rightChild
                     }
-                    else -> this.leftChild
+                    this.rightChild == null -> {
+                        this.leftChild
+                    }
+                    else -> {
+                        val minElement = this.rightChild!!.getSubTreeMin()
+                        this.value = minElement.value
+                        this.key = minElement.key
+
+                        if (this.rightChild!!.key == minElement.key) {
+                            this.rightChild = this.rightChild!!.rightChild
+                        } else {
+                            this.rightChild!!.removeMinByKey(this.key)
+                        }
+                        this.balanceSubTree()
+                    }
                 }
             }
         }
     }
 
-    private fun findSubTreeMin(node: AVLNode<Key, Value>): AVLNode<Key, Value> {
+    private fun getSubTreeMin(): AVLNode<Key, Value> {
         return when {
-            node.leftChild != null -> findSubTreeMin(node.leftChild!!)
-            else -> node
+            this.leftChild != null -> getSubTreeMin()
+            else -> this
         }
     }
 
-    private fun deleteMinInSubTree(node: AVLNode<Key, Value>): AVLNode <Key, Value> {
-        return when {
-            node.leftChild != null -> {
-                node.leftChild = deleteMinInSubTree(node.leftChild!!)
-                node.balanceSubTree()!!
-            }
-            else -> node.rightChild!!
+    private fun removeMinByKey(key: Key) {
+        if (this.leftChild?.key == key) {
+            this.leftChild = null
+        } else {
+            this.leftChild?.removeMinByKey(key)
         }
     }
 

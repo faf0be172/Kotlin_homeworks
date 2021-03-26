@@ -87,6 +87,22 @@ internal class AVLTreeTest {
         assertEquals("bbb", testMap1.get("b"))
     }
 
+    @ParameterizedTest
+    @MethodSource("getContainableKeyArguments")
+    fun testRemove(key: Int, expectedValue: Boolean) {
+        val testMap: AVLTree <Int, String> = AVLTree()
+        testMap.put(2, "2")
+        testMap.put(7, "7")
+        testMap.put(8, "8")
+        testMap.put(3, "3")
+        testMap.put(5, "5")
+        testMap.put(1, "1")
+        testMap.removeKey(8)
+        testMap.removeKey(5)
+        testMap.removeKey(10)
+        assertEquals(expectedValue, testMap.containsKey(key))
+    }
+
     @DisplayName("Contains key")
     @ParameterizedTest
     @MethodSource("getContainableKeyArguments")

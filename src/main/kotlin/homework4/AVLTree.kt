@@ -86,8 +86,9 @@ class AVLTree <Key : Comparable<Key>, Value> {
 
     fun putAllLacking(tree: AVLTree<Key, Value>) {
         for (entries in tree.getEntries()) {
-            if (!this.containsKey(entries.first))
+            if (!this.containsKey(entries.first)) {
                 this.put(entries.first, entries.second)
+            }
         }
     }
 }
