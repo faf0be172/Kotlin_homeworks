@@ -36,5 +36,16 @@ internal class BorTreeTest {
         testBorTree.add("hers")
         testBorTree.remove("his")
         assertEquals(false, testBorTree.contains("his"))
+        assertEquals(true, testBorTree.contains("hers"))
+    }
+
+    @Test
+    fun testFindByPrefix() {
+        val testBorTree = BorTree()
+        testBorTree.add("he")
+        testBorTree.add("she")
+        testBorTree.add("his")
+        testBorTree.add("hers")
+        assertEquals(1, testBorTree.howManyStartWithPrefix("s"))
     }
 }
