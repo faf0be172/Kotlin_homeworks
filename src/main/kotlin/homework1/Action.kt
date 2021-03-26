@@ -1,12 +1,17 @@
 package homework1
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+
 /**
- * Common interface [Action] for [PushFront], [PushBack] and [MoveElement]
+ * Common sealed class [Action] for [PushFront], [PushBack] and [MoveElement]
  * [undo] is accessory function for canceling previous operations on [ArrayDeque]
  */
 
-interface Action {
-    fun undo()
+@Serializable
+sealed class Action {
+    abstract fun undo(storage: PerformedCommandStorage)
+    abstract fun process(storage: PerformedCommandStorage)
 }
 
 /**
@@ -15,13 +20,15 @@ interface Action {
  * @property[PerformedCommandStorage] is a storage contains the changeable [ArrayDeque]
  */
 
-class PushFront(value: Int, private val storage: PerformedCommandStorage) : Action {
-    init {
+@Serializable
+@SerialName("PushFront")
+class PushFront(private val value: Int) : Action() {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addFirst(value)
         storage.addAction(this)
     }
 
-    override fun undo() {
+    override fun undo(storage: PerformedCommandStorage) {
         storage.arrayDeque.removeFirst()
     }
 }
@@ -32,13 +39,15 @@ class PushFront(value: Int, private val storage: PerformedCommandStorage) : Acti
  * @property[PerformedCommandStorage] is a storage contains the changeable [ArrayDeque]
 */
 
-class PushBack(value: Int, private val storage: PerformedCommandStorage) : Action {
-    init {
+@Serializable
+@SerialName("PushBack")
+class PushBack(private val value: Int) : Action() {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.addLast(value)
         storage.addAction(this)
     }
 
-    override fun undo() {
+    override fun undo(storage: PerformedCommandStorage) {
         storage.arrayDeque.removeLast()
     }
 }
@@ -53,17 +62,18 @@ class PushBack(value: Int, private val storage: PerformedCommandStorage) : Actio
  * and inserts removed element on [indexTo]
  */
 
+@Serializable
+@SerialName("MoveElement")
 class MoveElement(
     private val indexFrom: Int,
-    private val indexTo: Int,
-    private val storage: PerformedCommandStorage
-) : Action {
-    init {
+    private val indexTo: Int
+) : Action() {
+    override fun process(storage: PerformedCommandStorage) {
         storage.arrayDeque.moveElement(indexFrom, indexTo)
         storage.addAction(this)
     }
 
-    override fun undo() {
+    override fun undo(storage: PerformedCommandStorage) {
         storage.arrayDeque.moveElement(indexTo, indexFrom)
     }
 }
