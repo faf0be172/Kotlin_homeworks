@@ -1,6 +1,6 @@
 package homework4
 
-class AVLTree <Key : Comparable<Key>, Value> : Map <Key, Value>{
+class AVLTree <Key : Comparable<Key>, Value> : Map <Key, Value> {
     private var root: AVLNode<Key, Value>? = null
 
     override var size: Int = 0
