@@ -1,94 +1,79 @@
 package homework4
 
-class AVLTree <Key : Comparable<Key>, Value> {
-    var root: AVLNode<Key, Value>? = null
+class AVLTree <Key : Comparable<Key>, Value> : Map <Key, Value>{
+    private var root: AVLNode<Key, Value>? = null
 
-    fun put(key: Key, value: Value): Value? {
-        return if (this.root != null) {
-            val current = this.root!!.recursivePut(key, value)
-            this.root = this.root!!.balanceSubTree()
+    override var size: Int = 0
+
+    override val keys: Set<Key>
+        get() = getAVLKeys()
+
+    override val values: Collection<Value>
+        get() = getAVLValues()
+
+    override fun isEmpty(): Boolean = root == null
+
+    override val entries: Set<Map.Entry<Key, Value>>
+        get() = getAVLEntries()
+
+    fun put(key: Key, value: Value): Value? =
+        if (this.root != null) {
+            val current = this.root?.recursivePut(key, value)
+            if (current == null) this.size++
+            this.root = this.root?.balanceSubTree()
             current
         } else {
             this.root = AVLNode(key, value)
+            this.size++
             null
         }
-    }
 
-    fun get(key: Key): Value? {
-        return if (this.root != null) {
-            this.root!!.recursiveGet(key)
-        } else {
-            null
-        }
-    }
+    override fun get(key: Key): Value? =
+        this.root?.recursiveGet(key)
 
-    fun containsValue(value: Value): Boolean {
-        return if (this.root != null) {
-            this.root!!.recursiveContainsValue(value)
-        } else {
-            false
-        }
-    }
+    override fun containsValue(value: Value): Boolean =
+        this.root?.recursiveContainsValue(value) ?: false
 
-    fun containsKey(key: Key): Boolean {
-        return if (this.root != null) {
-            this.root!!.recursiveContainsKey(key)
-        } else {
-            false
-        }
-    }
+    override fun containsKey(key: Key): Boolean =
+        this.root?.recursiveContainsKey(key) ?: false
 
-    fun removeKey(key: Key): Value? {
-        return when {
+    fun removeKey(key: Key): Value? =
+        when {
             this.root != null -> {
-                val removedValue = this.get(key)
+                val removedValue = this[key]
                 if (removedValue != null) {
-                    this.root = this.root!!.recursiveRemove(key)
+                    this.root = this.root?.recursiveRemove(key)
+                    this.size++
                     removedValue
                 } else null
             }
             else -> null
         }
+
+    private fun getAVLKeys(): Set<Key> {
+        val keys = mutableSetOf<Key>()
+        this.root?.recursiveGetKeys(keys)
+        return keys
     }
 
-    fun getKeys(): List<Key> {
-        val list = mutableListOf<Key>()
+    private fun getAVLValues(): Set<Value> {
+        val values = mutableSetOf<Value>()
+        this.root?.recursiveGetValues(values)
+        return values
+    }
+
+    private fun getAVLEntries(): Set<Map.Entry<Key, Value>> {
+        val entries = mutableSetOf<Map.Entry<Key, Value>>()
         return when {
             this.root != null -> {
-                this.root!!.recursiveGetKeys(list)
-                list
+                this.root!!.recursiveGetEntries(entries)
+                entries
             }
-            else -> list
+            else -> entries
         }
     }
 
-    fun getValues(): List<Value> {
-        val list = mutableListOf<Value>()
-        return when {
-            this.root != null -> {
-                this.root!!.recursiveGetValues(list)
-                list
-            }
-            else -> list
-        }
-    }
-
-    fun getEntries(): List<Pair<Key, Value>> {
-        val list = mutableListOf<Pair<Key, Value>>()
-        return when {
-            this.root != null -> {
-                this.root!!.recursiveGetEntries(list)
-                list
-            }
-            else -> list
-        }
-    }
-
-    fun putAllLacking(tree: AVLTree<Key, Value>) {
-        for (entries in tree.getEntries()) {
-            if (!this.containsKey(entries.first)) {
-                this.put(entries.first, entries.second)
-            }
-        }
+    fun clear() {
+        this.root = null
     }
 }
