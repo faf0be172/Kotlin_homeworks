@@ -34,16 +34,14 @@ internal class AVLTreeTest {
         )
     }
 
-    @DisplayName("Remove from empty map")
     @Test
-    fun testRemoveFromEmptyMap() {
+    fun `test remove from empty map`() {
         val testMap: AVLTree <String, String> = AVLTree()
         assertEquals(null, testMap.removeKey("nonExistentKey"))
     }
 
-    @DisplayName("isEmpty function")
     @Test
-    fun testIsEmpty() {
+    fun `test isEmpty function`() {
         val testMap: AVLTree <String, String> = AVLTree()
         val isMapEmpty = testMap.isEmpty()
         testMap.put("a", "aaa")
@@ -51,9 +49,8 @@ internal class AVLTreeTest {
         assertTrue(isMapEmpty && !testMap.isEmpty())
     }
 
-    @DisplayName("clear function")
     @Test
-    fun testClear() {
+    fun `test clear function`() {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("b", "bbb")
@@ -61,36 +58,32 @@ internal class AVLTreeTest {
         assertTrue(testMap.isEmpty())
     }
 
-    @DisplayName("Get keys")
     @Test
-    fun testGetKeys() {
+    fun `test get keys`() {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("b", "bbb")
         assertEquals(setOf("a", "b"), testMap.keys)
     }
 
-    @DisplayName("Change existing node value")
     @Test
-    fun testChangeNodeValue() {
+    fun `test change existing node value`() {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("a", "bbb")
         assertEquals("bbb", testMap["a"])
     }
 
-    @DisplayName("Get values")
     @Test
-    fun testGetValues() {
+    fun `test get values`() {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("b", "bbb")
         assertEquals(setOf("aaa", "bbb"), testMap.values)
     }
 
-    @DisplayName("Get entries")
     @Test
-    fun testGetEntries() {
+    fun `test get entries`() {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("b", "bbb")
@@ -99,9 +92,8 @@ internal class AVLTreeTest {
         assertEquals(setOf(Pair("a", "aaa"), Pair("b", "bbb")), actualSet)
     }
 
-    @DisplayName("Tree size")
     @Test
-    fun testSize() {
+    fun `test tree size`() {
         val testMap: AVLTree <Int, String> = AVLTree()
         testMap.put(2, "2")
         testMap.put(7, "7")
@@ -114,7 +106,7 @@ internal class AVLTreeTest {
 
     @ParameterizedTest
     @MethodSource("getContainableKeyArguments")
-    fun testRemove(key: Int, expectedValue: Boolean) {
+    fun `test remove`(key: Int, expectedValue: Boolean) {
         val testMap: AVLTree <Int, String> = AVLTree()
         testMap.put(2, "2")
         testMap.put(7, "7")
@@ -131,7 +123,7 @@ internal class AVLTreeTest {
     @DisplayName("Contains key")
     @ParameterizedTest
     @MethodSource("getContainableKeyArguments")
-    fun testContainsKey(key: Int, expectedValue: Boolean) {
+    fun `test contains key`(key: Int, expectedValue: Boolean) {
         val testMap: AVLTree <Int, String> = AVLTree()
         testMap.put(1, "1")
         testMap.put(6, "6")
@@ -145,7 +137,7 @@ internal class AVLTreeTest {
     @DisplayName("Contains value")
     @ParameterizedTest
     @MethodSource("getContainableValueArguments")
-    fun testContainsValue(value: String, expectedValue: Boolean) {
+    fun `test contains value`(value: String, expectedValue: Boolean) {
         val testMap: AVLTree <Int, String> = AVLTree()
         testMap.put(2, "2")
         testMap.put(5, "5")
@@ -159,7 +151,7 @@ internal class AVLTreeTest {
     @DisplayName("Nullable and non-null queries")
     @ParameterizedTest
     @MethodSource("getInsertableStringArguments")
-    fun testPutAndGet(key: String, expectedValue: Any?) {
+    fun `test put and get`(key: String, expectedValue: Any?) {
         val testMap: AVLTree <String, String> = AVLTree()
         testMap.put("a", "aaa")
         testMap.put("b", "bbb")
