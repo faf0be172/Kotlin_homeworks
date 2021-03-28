@@ -11,10 +11,10 @@ class AVLTree <Key : Comparable<Key>, Value> : Map <Key, Value> {
     override val values: Collection<Value>
         get() = getAVLValues()
 
-    override fun isEmpty(): Boolean = root == null
-
     override val entries: Set<Map.Entry<Key, Value>>
         get() = getAVLEntries()
+
+    override fun isEmpty(): Boolean = root == null
 
     fun put(key: Key, value: Value): Value? =
         if (this.root != null) {
@@ -42,7 +42,7 @@ class AVLTree <Key : Comparable<Key>, Value> : Map <Key, Value> {
             this.root != null -> {
                 val removedValue = this[key]
                 if (removedValue != null) {
-                    this.root = this.root?.recursiveRemove(key)
+                    this.root = this.root?.recursiveRemove(key, null)
                     this.size++
                     removedValue
                 } else null

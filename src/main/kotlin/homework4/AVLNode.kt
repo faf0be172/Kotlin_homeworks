@@ -2,53 +2,12 @@ package homework4
 
 import kotlin.math.max
 
-class AVLNode <Key : Comparable<Key>, Value>
-    (override var key: Key, override var value: Value) :
-    Map.Entry<Key, Value> {
+abstract class Node <Key : Comparable<Key>, Value>(private val key: Key, open var value: Value) {
+    protected var leftChild: AVLNode <Key, Value>? = null
+    protected var rightChild: AVLNode <Key, Value>? = null
 
-    companion object {
-        private const val absoluteCriticalBalanceFactor = 2
-    }
-    private var height = 0
-    private var leftChild: AVLNode <Key, Value>? = null
-    private var rightChild: AVLNode <Key, Value>? = null
-
-    private fun fixHeight() {
-        val leftSubtreeHeight = this.leftChild?.height ?: 0
-        val rightSubtreeHeight = this.rightChild?.height ?: 0
-        this.height = max(leftSubtreeHeight, rightSubtreeHeight) + 1
-    }
-
-    private fun getBalanceFactor(): Int {
-        val leftSubtreeHeight = this.leftChild?.height ?: 0
-        val rightSubtreeHeight = this.rightChild?.height ?: 0
-        return rightSubtreeHeight - leftSubtreeHeight
-    }
-
-    fun recursivePut(key: Key, value: Value): Value? =
-        when {
-            key > this.key -> {
-                if (this.rightChild == null) {
-                    this.rightChild = AVLNode(key, value)
-                    null
-                } else {
-                    this.rightChild?.recursivePut(key, value)
-                }
-            }
-            key < this.key -> {
-                if (this.leftChild == null) {
-                    this.leftChild = AVLNode(key, value)
-                    null
-                } else {
-                    this.leftChild?.recursivePut(key, value)
-                }
-            }
-            else -> {
-                val oldValue = this.value
-                this.value = value
-                oldValue
-            }
-        }
+    abstract fun recursivePut(key: Key, value: Value): Value?
+    abstract fun recursiveRemove(key: Key, previousNode: AVLNode<Key, Value>?): AVLNode<Key, Value>?
 
     fun recursiveGet(key: Key): Value? =
         when {
@@ -77,13 +36,81 @@ class AVLNode <Key : Comparable<Key>, Value>
 
     fun recursiveContainsKey(key: Key): Boolean =
         when {
-            key < this.key -> {
+        this.key != key -> {
+            val containsOnLeft =
                 this.leftChild?.recursiveContainsKey(key) ?: false
-            }
-            key > this.key -> {
+
+            val containsOnRight =
                 this.rightChild?.recursiveContainsKey(key) ?: false
+
+            containsOnLeft || containsOnRight
+        }
+        else -> true
+    }
+
+    fun recursiveGetKeys(keys: MutableSet<Key>) {
+        keys.add(this.key)
+        this.leftChild?.recursiveGetKeys(keys)
+        this.rightChild?.recursiveGetKeys(keys)
+    }
+
+    fun recursiveGetValues(values: MutableSet<Value>) {
+        values.add(this.value)
+        this.leftChild?.recursiveGetValues(values)
+        this.rightChild?.recursiveGetValues(values)
+    }
+
+    fun recursiveGetEntries(entries: MutableSet<Map.Entry <Key, Value>>) {
+        entries.add(AVLNode(this.key, this.value))
+        this.leftChild?.recursiveGetEntries(entries)
+        this.rightChild?.recursiveGetEntries(entries)
+    }
+}
+
+class AVLNode <Key : Comparable<Key>, Value>
+    (override val key: Key, override var value: Value) :
+    Map.Entry<Key, Value>, Node<Key, Value>(key, value) {
+
+    companion object {
+        private const val absoluteCriticalBalanceFactor = 2
+    }
+    private var height = 0
+
+    private fun fixHeight() {
+        val leftSubtreeHeight = this.leftChild?.height ?: 0
+        val rightSubtreeHeight = this.rightChild?.height ?: 0
+        this.height = max(leftSubtreeHeight, rightSubtreeHeight) + 1
+    }
+
+    private fun getBalanceFactor(): Int {
+        val leftSubtreeHeight = this.leftChild?.height ?: 0
+        val rightSubtreeHeight = this.rightChild?.height ?: 0
+        return rightSubtreeHeight - leftSubtreeHeight
+    }
+
+    override fun recursivePut(key: Key, value: Value): Value? =
+        when {
+            key > this.key -> {
+                if (this.rightChild == null) {
+                    this.rightChild = AVLNode(key, value)
+                    null
+                } else {
+                    this.rightChild?.recursivePut(key, value)
+                }
             }
-            else -> true
+            key < this.key -> {
+                if (this.leftChild == null) {
+                    this.leftChild = AVLNode(key, value)
+                    null
+                } else {
+                    this.leftChild?.recursivePut(key, value)
+                }
+            }
+            else -> {
+                val oldValue = this.value
+                this.value = value
+                oldValue
+            }
         }
 
     private fun rotateSubTreeRight(): AVLNode <Key, Value>? {
@@ -127,14 +154,14 @@ class AVLNode <Key : Comparable<Key>, Value>
         }
     }
 
-    fun recursiveRemove(key: Key): AVLNode<Key, Value>? =
+    override fun recursiveRemove(key: Key, previousNode: AVLNode<Key, Value>?): AVLNode<Key, Value>? =
         when {
             key < this.key -> {
-                this.leftChild = this.leftChild?.recursiveRemove(key)
+                this.leftChild = this.leftChild?.recursiveRemove(key, this)
                 this
             }
             key > this.key -> {
-                this.rightChild = this.rightChild?.recursiveRemove(key)
+                this.rightChild = this.rightChild?.recursiveRemove(key, this)
                 this
             }
             else -> {
@@ -143,25 +170,29 @@ class AVLNode <Key : Comparable<Key>, Value>
                     this.rightChild == null -> this.leftChild
                     else -> {
                         val minElement = this.rightChild?.getSubTreeMin() ?: this
-                        this.value = minElement.value
-                        this.key = minElement.key
-
-                        if (this.rightChild?.key == minElement.key) {
-                            this.rightChild = this.rightChild!!.rightChild
-                        } else {
-                            this.rightChild?.removeMinByKey(this.key)
+                        if (previousNode != null) {
+                            if (previousNode.leftChild == this)
+                                previousNode.leftChild = minElement
+                            else
+                                previousNode.rightChild = minElement
                         }
-                        this.balanceSubTree()
+                        minElement.leftChild = this.leftChild
+
+                        if (this.rightChild?.key != minElement.key) {
+                            this.rightChild?.removeMinByKey(key)
+                            minElement.rightChild = this.rightChild
+                        }
+                        else {
+                            minElement.rightChild = minElement.rightChild?.rightChild
+                        }
+                        minElement.balanceSubTree()
                     }
                 }
             }
         }
 
     private fun getSubTreeMin(): AVLNode<Key, Value> =
-        when {
-            this.leftChild != null -> getSubTreeMin()
-            else -> this
-        }
+        this.leftChild?.let { getSubTreeMin() } ?: this
 
     private fun removeMinByKey(key: Key) {
         if (this.leftChild?.key == key) {
@@ -169,23 +200,5 @@ class AVLNode <Key : Comparable<Key>, Value>
         } else {
             this.leftChild?.removeMinByKey(key)
         }
-    }
-
-    fun recursiveGetKeys(keys: MutableSet<Key>) {
-        keys.add(this.key)
-        this.leftChild?.recursiveGetKeys(keys)
-        this.rightChild?.recursiveGetKeys(keys)
-    }
-
-    fun recursiveGetValues(values: MutableSet<Value>) {
-        values.add(this.value)
-        this.leftChild?.recursiveGetValues(values)
-        this.rightChild?.recursiveGetValues(values)
-    }
-
-    fun recursiveGetEntries(entries: MutableSet<Map.Entry <Key, Value>>) {
-        entries.add(AVLNode(this.key, this.value))
-        this.leftChild?.recursiveGetEntries(entries)
-        this.rightChild?.recursiveGetEntries(entries)
     }
 }
