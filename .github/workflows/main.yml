@@ -1,5 +1,4 @@
 name: simple CI
-
 on:
   push:
     branches: [ master ]
@@ -11,10 +10,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Run build
         run: ./gradlew build
-
       - name: Run tests
         run: ./gradlew test
 
