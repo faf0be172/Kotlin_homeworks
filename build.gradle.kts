@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation("junit:junit:4.12")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
@@ -38,7 +39,8 @@ detekt {
 tasks.test {
     useJUnitPlatform()
     testLogging {
-        events(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED
+        events(
+            TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED
         )
     }
 }

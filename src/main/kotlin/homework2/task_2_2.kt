@@ -1,4 +1,4 @@
-package secondhomework
+package homework2
 
 import kotlin.random.Random
 
