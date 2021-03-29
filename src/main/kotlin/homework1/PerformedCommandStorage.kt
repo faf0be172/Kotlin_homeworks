@@ -1,4 +1,4 @@
-package firsthomework
+package homework1
 
 import java.util.Stack
 import java.io.File
@@ -11,15 +11,12 @@ import kotlinx.serialization.json.Json
 /**
  * [PerformedCommandStorage] contains the list of whole numbers and the queue of actions on it
  * @property[actions] is an ordered private list of actions: [PushFront], [PushBack] and [MoveElement]
- * @property[_arrayDeque] is a private stack of whole numbers, modified by [actions]
+ * @property[arrayDeque] is a private stack of whole numbers, modified by [actions]
  */
 
 class PerformedCommandStorage {
     private val actions: Stack<Action> = Stack()
-    private val _arrayDeque: ArrayDeque<Int> = ArrayDeque()
-
-    val arrayDeque: ArrayDeque<Int>
-        get() = _arrayDeque
+    val arrayDeque: ArrayDeque<Int> = ArrayDeque()
 
     fun printCurrentPlacement() {
         /**

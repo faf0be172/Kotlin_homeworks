@@ -19,12 +19,15 @@ repositories {
 }
 
 dependencies {
+    implementation("junit:junit:4.12")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
+    implementation("com.charleskorn.kaml:kaml:0.28.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    implementation("com.squareup:kotlinpoet:1.6.0")
 }
 
 detekt {
@@ -36,11 +39,13 @@ detekt {
 tasks.test {
     useJUnitPlatform()
     testLogging {
-        events(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+        events(
+            TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED
+        )
     }
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf("-Werror")
