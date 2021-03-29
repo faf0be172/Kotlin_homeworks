@@ -1,14 +1,14 @@
-package firsthomework
+package homework1
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
-internal class PushBackTest {
+internal class PushFrontTest {
 
     @Test
-    fun testPushBackSimple() {
+    fun testPushFrontSimple() {
         val testStorage = PerformedCommandStorage()
-        PushBack(value = 1).process(testStorage)
+        PushFront(value = 1).process(testStorage)
         assertEquals(listOf(1), testStorage.arrayDeque)
     }
 
@@ -16,26 +16,26 @@ internal class PushBackTest {
     fun testPushBackComplicated() {
         val testStorage = PerformedCommandStorage()
         for (number in 1..3) {
-            PushBack(number).process(testStorage)
+            PushFront(number).process(testStorage)
         }
-        assertEquals((1..3).toList(), testStorage.arrayDeque)
+        assertEquals((1..3).toList().reversed(), testStorage.arrayDeque)
     }
 
     @Test
-    fun testUndoPushBackSimple() {
+    fun testUndoPushFrontSimple() {
         val testStorage = PerformedCommandStorage()
-        PushBack(value = 1).process(testStorage)
+        PushFront(value = 1).process(testStorage)
         testStorage.undoLastAction()
         assertTrue(testStorage.arrayDeque.isEmpty())
     }
 
     @Test
-    fun testUndoPushBackComplicated() {
+    fun testUndoPushFrontComplicated() {
         val testStorage = PerformedCommandStorage()
         for (number in 1..3) {
-            PushBack(number).process(testStorage)
+            PushFront(number).process(testStorage)
         }
         testStorage.undoLastAction()
-        assertEquals(listOf(1, 2), testStorage.arrayDeque)
+        assertEquals(listOf(2, 1), testStorage.arrayDeque)
     }
 }
