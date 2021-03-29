@@ -3,8 +3,8 @@ package homework4
 import kotlin.math.max
 
 abstract class Node <Key : Comparable<Key>, Value>(private val key: Key, open var value: Value) {
-    protected var leftChild: AVLNode <Key, Value>? = null
-    protected var rightChild: AVLNode <Key, Value>? = null
+    var leftChild: AVLNode <Key, Value>? = null
+    var rightChild: AVLNode <Key, Value>? = null
 
     abstract fun recursivePut(key: Key, value: Value): Value?
     abstract fun recursiveRemove(key: Key, previousNode: AVLNode<Key, Value>?): AVLNode<Key, Value>?
@@ -83,7 +83,9 @@ class AVLNode <Key : Comparable<Key>, Value>
     }
 
     private fun getBalanceFactor(): Int {
+        this.leftChild?.fixHeight()
         val leftSubtreeHeight = this.leftChild?.height ?: 0
+        this.rightChild?.fixHeight()
         val rightSubtreeHeight = this.rightChild?.height ?: 0
         return rightSubtreeHeight - leftSubtreeHeight
     }
@@ -117,8 +119,6 @@ class AVLNode <Key : Comparable<Key>, Value>
         val current = this.leftChild
         this.leftChild = current?.rightChild
         current?.rightChild = this
-        this.fixHeight()
-        current?.fixHeight()
         return current
     }
 
@@ -126,20 +126,19 @@ class AVLNode <Key : Comparable<Key>, Value>
         val current = this.rightChild
         this.rightChild = current?.leftChild
         current?.leftChild = this
-        this.fixHeight()
-        current?.fixHeight()
         return current
     }
 
     fun balanceSubTree(): AVLNode<Key, Value>? {
-        fixHeight()
+        leftChild = leftChild?.balanceSubTree()
+        rightChild = rightChild?.balanceSubTree()
         return when {
             getBalanceFactor() == absoluteCriticalBalanceFactor -> {
                 //  getBalanceFactor() > 0 then this.rightChild.height > 0
                 if (this.rightChild?.getBalanceFactor() ?: 1 < 0) {
                     this.rightChild = this.rightChild?.rotateSubTreeRight()
                 }
-                rotateSubTreeLeft()
+                this.rotateSubTreeLeft()
             }
 
             getBalanceFactor() == -absoluteCriticalBalanceFactor -> {
@@ -147,9 +146,8 @@ class AVLNode <Key : Comparable<Key>, Value>
                 if (this.leftChild?.getBalanceFactor() ?: -1 > 0) {
                     this.leftChild = this.leftChild?.rotateSubTreeLeft()
                 }
-                rotateSubTreeRight()
+                this.rotateSubTreeRight()
             }
-
             else -> this
         }
     }
