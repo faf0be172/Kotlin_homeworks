@@ -26,9 +26,7 @@ internal class TestYamlParser {
                     YamlFunction("pushFront"),
                     YamlFunction("moveElement")
                 )
-            ), TestYamlParser::class.java
-                .getResource("YamlParserTest/paramTest1/testConfig.yaml").path
-            ),
+            ), "paramTest1"),
             Arguments.of(TestConfiguration(
                 "PcsPackage",
                 "PerformedCommandStorage",
@@ -37,15 +35,14 @@ internal class TestYamlParser {
                     YamlFunction("deserializeActions"),
                     YamlFunction("undoLastAction")
                 )
-            ), TestYamlParser::class.java
-                .getResource("YamlParserTest/paramTest2/testConfig.yaml").path
-        )
+            ), "paramTest2")
         )
     }
 
     @MethodSource("getCorrectArguments")
     @ParameterizedTest
-    fun testParser(expected: TestConfiguration, actualPath: String) {
+    fun testParser(expected: TestConfiguration, testName: String) {
+        val actualPath = javaClass.getResource("YamlParserTest/$testName/testConfig.yaml").path
         val actual = deserializeYamlData(actualPath)
         assertEquals(expected, actual)
     }
