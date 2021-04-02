@@ -9,9 +9,9 @@ abstract class ParserNode(val content: String) {
 }
 
 class ParserOperation(content: String,
-    override val leftChild: ParserNode,
-    override val rightChild: ParserNode) : ParserNode(content) {
-    override val arithmeticValue = when(content) {
+                      override val leftChild: ParserNode,
+                      override val rightChild: ParserNode) : ParserNode(content) {
+    override val arithmeticValue = when (content) {
         "+" -> leftChild.arithmeticValue + rightChild.arithmeticValue
         "-" -> leftChild.arithmeticValue - rightChild.arithmeticValue
         "*" -> leftChild.arithmeticValue * rightChild.arithmeticValue
@@ -20,7 +20,7 @@ class ParserOperation(content: String,
     }
 }
 
-class ParserOperand(content: String): ParserNode(content) {
+class ParserOperand(content: String) : ParserNode(content) {
     override val leftChild: ParserNode? = null
     override val rightChild: ParserNode? = null
     override val arithmeticValue = content.toInt()
