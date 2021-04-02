@@ -8,10 +8,9 @@ abstract class ParserNode(val content: String) {
     abstract val arithmeticValue: Int
 }
 
-class ParserOperation(
-    content: String,
+class ParserOperation(content: String,
     override val leftChild: ParserNode,
-    override val rightChild: ParserNode): ParserNode(content) {
+    override val rightChild: ParserNode) : ParserNode(content) {
     override val arithmeticValue = when(content) {
         "+" -> leftChild.arithmeticValue + rightChild.arithmeticValue
         "-" -> leftChild.arithmeticValue - rightChild.arithmeticValue
