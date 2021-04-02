@@ -2,7 +2,7 @@ package homework5
 
 import java.io.File
 
-abstract class ParserNode(val content: String) {
+abstract class ParserNode(val content: String, val level: Int) {
     abstract val leftChild: ParserNode?
     abstract val rightChild: ParserNode?
     abstract val arithmeticValue: Int
@@ -10,9 +10,10 @@ abstract class ParserNode(val content: String) {
 
 class ParserOperation(
     content: String,
+    level: Int,
     override val leftChild: ParserNode,
     override val rightChild: ParserNode
-) : ParserNode(content) {
+) : ParserNode(content, level) {
     override val arithmeticValue = when (content) {
         "+" -> leftChild.arithmeticValue + rightChild.arithmeticValue
         "-" -> leftChild.arithmeticValue - rightChild.arithmeticValue
@@ -20,12 +21,19 @@ class ParserOperation(
         "/" -> leftChild.arithmeticValue / rightChild.arithmeticValue
         else -> 0
     }
+
+    override fun toString(): String {
+        return "....".repeat(level) + content + "\n" + leftChild.toString() + rightChild.toString()
+    }
 }
 
-class ParserOperand(content: String) : ParserNode(content) {
+class ParserOperand(content: String, level: Int) : ParserNode(content, level) {
     override val leftChild: ParserNode? = null
     override val rightChild: ParserNode? = null
     override val arithmeticValue = content.toInt()
+    override fun toString(): String {
+        return "....".repeat(level) + content + "\n"
+    }
 }
 
 class ParserTree(expression: String) {
@@ -34,43 +42,36 @@ class ParserTree(expression: String) {
         .replace(")", "")
         .split(" ")
 
-    private val root: ParserNode = recursiveParseTree(0).first
-    private val tree: String? = recursivePrintTree(this.root, 0)
+    private val root: ParserNode = recursiveParseTree(position = 0, level = 0).first
+    private val tree: String = this.root.toString()
     val arithmeticValue = this.root.arithmeticValue
 
-    private fun recursiveParseTree(position: Int): Pair<ParserNode, Int> {
+    private fun recursiveParseTree(position: Int, level: Int): Pair<ParserNode, Int> {
         return when {
             this.elements[position] in listOf("+", "-", "*", "/") -> {
                 val operationType = this.elements[position]
 
-                val parsedFirstOperand = recursiveParseTree(position + 1)
+                val parsedFirstOperand = recursiveParseTree(position + 1, level + 1)
                 val leftOperand = parsedFirstOperand.first
                 var newPosition = parsedFirstOperand.second
 
-                val parsedSecondOperand = recursiveParseTree(newPosition)
+                val parsedSecondOperand = recursiveParseTree(newPosition, level + 1)
                 val rightOperand = parsedSecondOperand.first
                 newPosition = parsedSecondOperand.second
 
-                Pair(ParserOperation(operationType, leftOperand, rightOperand), newPosition)
+                Pair(ParserOperation(operationType, level, leftOperand, rightOperand), newPosition)
             }
-            else -> Pair(ParserOperand(elements[position]), position + 1)
+            else -> Pair(ParserOperand(elements[position], level), position + 1)
         }
     }
 
-    fun printTree(path: String) {
+    fun printTreeToFile(path: String) {
         val file = File(path)
-        file.writeText(this.tree ?: "tree is empty")
+        file.writeText(this.tree)
     }
+}
 
-    private fun recursivePrintTree(node: ParserNode?, level: Int): String? {
-        node?.let {
-            var treeFragment = ("....".repeat(level) + node.content + '\n')
-            if (node.leftChild != null && node.rightChild != null) {
-                treeFragment += recursivePrintTree(node.leftChild, level + 1)
-                treeFragment += recursivePrintTree(node.rightChild, level + 1)
-            }
-            return treeFragment
-        }
-        return null
-    }
+fun main() {
+    val testParser = ParserTree("(+ (* 2 (- 5 2)) (/ 20 2))")
+    testParser.printTreeToFile("temp.txt")
 }

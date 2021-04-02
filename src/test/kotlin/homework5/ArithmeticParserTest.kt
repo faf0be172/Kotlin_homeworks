@@ -25,7 +25,7 @@ internal class ArithmeticParserTest {
         val tempFile = tempTxtFile.resolve("temp.txt")
 
         val testParser = ParserTree(File(expressionPath).readText())
-        testParser.printTree(tempFile.path)
+        testParser.printTreeToFile(tempFile.path)
 
         assertEquals(expectedValue, testParser.arithmeticValue)
         assertEquals(File(expectedTreePath).readText().replace("\r\n", "\n"), tempFile.readText())
