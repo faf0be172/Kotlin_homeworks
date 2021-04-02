@@ -6,8 +6,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build-on-ubuntu:
-    runs-on: ubuntu-latest
+  build-on-windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Run build
@@ -18,8 +18,8 @@ jobs:
       - name: Run detekt
         run: ./gradlew detekt
 
-  build-on-windows:
-    runs-on: windows-latest
+  build-on-ubuntu:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
