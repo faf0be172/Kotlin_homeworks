@@ -26,7 +26,7 @@ fun createRandomMutableList(size: Int): MutableList<Int> {
 
 fun processSize(size: Int, maxAcceptableLevel: Int, cases: Int): List<Int> {
     val averageTimes = mutableListOf<Int>()
-    repeat(maxAcceptableLevel + 1) { averageTimes.add(0)}
+    repeat(maxAcceptableLevel + 1) { averageTimes.add(0) }
 
     repeat(cases) {
         val newTestingList = createRandomMutableList(size)
@@ -37,7 +37,7 @@ fun processSize(size: Int, maxAcceptableLevel: Int, cases: Int): List<Int> {
             averageTimes[it] = (finishTime - startTime).toInt()
         }
     }
-    averageTimes.map { it/cases }
+    averageTimes.map { it / cases }
     return averageTimes
 }
 

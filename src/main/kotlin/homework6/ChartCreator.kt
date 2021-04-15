@@ -2,7 +2,9 @@ package homework6
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.ChartPanel
 import org.jfree.chart.ui.ApplicationFrame
-import org.jfree.data.xy.*
+import org.jfree.data.xy.XYDataset
+import org.jfree.data.xy.XYSeries
+import org.jfree.data.xy.XYSeriesCollection
 import org.jfree.ui.RefineryUtilities
 import java.awt.Dimension
 

@@ -1,6 +1,6 @@
 package homework6
 
-import java.util.*
+import java.util.Stack
 
 fun MutableList<Int>.multiThreadMergeSort(acceptableLevel: Int) {
     this.mergeMultiThreadSort(0, this.size - 1, 0, acceptableLevel)
