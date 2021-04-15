@@ -1,9 +1,22 @@
 package homework6
 
-import kotlin.math.max
-import kotlin.math.pow
+const val MAX_TEST_ARRAY_SIZE = 2000000
+const val TESTS_NUMBER = 10
 
-val TEST_ARRAY_SIZES = arrayListOf(5000, 10000, 50000, 100000, 500000, 700000, 1000000, 1200000, 1500000, 1700000, 2000000)
+val TEST_ARRAY_SIZES = getTestArraySizes(
+    MAX_TEST_ARRAY_SIZE,
+    TESTS_NUMBER)
+
+fun getTestArraySizes(maxTestArraySize: Int, testsNumber: Int): List<Int> {
+    val step = maxTestArraySize / testsNumber
+    var currentSize = step
+    val testArray = mutableListOf<Int>()
+    while (currentSize <= MAX_TEST_ARRAY_SIZE) {
+        testArray.add(currentSize)
+        currentSize += step
+    }
+    return testArray.toList()
+}
 
 fun createRandomMutableList(size: Int): MutableList<Int> {
     val newList = (1..size).toMutableList()
@@ -19,7 +32,7 @@ fun processSize(size: Int, maxAcceptableLevel: Int, cases: Int): List<Int> {
         val newTestingList = createRandomMutableList(size)
         repeat(maxAcceptableLevel + 1) {
             val startTime = System.currentTimeMillis()
-            newTestingList.multiThreadMergeSort(acceptableLevel = it);
+            newTestingList.multiThreadMergeSort(acceptableLevel = it)
             val finishTime = System.currentTimeMillis()
             averageTimes[it] = (finishTime - startTime).toInt()
         }
@@ -33,7 +46,7 @@ fun getProcessingTime(maxAcceptableLevel: Int, cases: Int, logs: Boolean): List<
     repeat(maxAcceptableLevel + 1) {
         processingResults.add(mutableMapOf())
     }
-    for (i in 0 until TEST_ARRAY_SIZES.size) {
+    for (i in TEST_ARRAY_SIZES.indices) {
         val size = TEST_ARRAY_SIZES[i]
         val averageTime = processSize(size, maxAcceptableLevel, cases)
         repeat(maxAcceptableLevel + 1) {

@@ -12,8 +12,8 @@ fun MutableList<Int>.mergeSort() {
 
 private fun MutableList<Int>.mergeSort(first: Int, last: Int) {
     if (first < last) {
-        this.mergeSort(first, (first + last) / 2)
-        this.mergeSort((first + last) / 2 + 1, last)
+        this.mergeSort(first, (first + last) shr 1)
+        this.mergeSort(((first + last) shr 1) + 1, last)
         this.mergeParts(first, last)
     }
 }
@@ -21,12 +21,24 @@ private fun MutableList<Int>.mergeSort(first: Int, last: Int) {
 private fun MutableList<Int>.mergeMultiThreadSort(first: Int, last: Int, currentLevel: Int, acceptableLevel: Int) {
     if (first < last) {
         val leftRunnable = when {
-            currentLevel < acceptableLevel -> Runnable { this.mergeMultiThreadSort(first, (first + last) / 2, currentLevel + 1, acceptableLevel) }
-            else -> Runnable { this.mergeSort(first, (first + last) / 2) }
+            currentLevel < acceptableLevel -> Runnable {
+                this.mergeMultiThreadSort(
+                    first,
+                    (first + last) shr 1,
+                    currentLevel + 1,
+                    acceptableLevel)
+            }
+            else -> Runnable { this.mergeSort(first, (first + last) shr 1) }
         }
         val rightRunnable = when {
-            currentLevel < acceptableLevel -> Runnable { this.mergeMultiThreadSort((first + last) / 2 + 1, last, currentLevel + 1, acceptableLevel) }
-            else -> Runnable { this.mergeSort((first + last) / 2 + 1, last) }
+            currentLevel < acceptableLevel -> Runnable {
+                this.mergeMultiThreadSort(
+                    ((first + last) shr 1) + 1,
+                    last,
+                    currentLevel + 1,
+                    acceptableLevel)
+            }
+            else -> Runnable { this.mergeSort(((first + last) shr 1) + 1, last) }
         }
 
         val leftThread = Thread(leftRunnable)
@@ -41,7 +53,7 @@ private fun MutableList<Int>.mergeMultiThreadSort(first: Int, last: Int, current
 
 private fun MutableList<Int>.mergeParts(first: Int, last: Int) {
     var leftPartCurrent = first
-    var rightPartCurrent = (first + last) / 2 + 1
+    var rightPartCurrent = ((first + last) shr 1) + 1
     val mergedList = Stack<Int>()
     repeat(last - first + 1) {
         when {
@@ -63,7 +75,7 @@ private fun MutableList<Int>.mergeParts(first: Int, last: Int) {
                 }
             }
         }
-        if (leftPartCurrent == (first + last) / 2 + 1) leftPartCurrent = -1
+        if (leftPartCurrent == ((first + last) shr 1) + 1) leftPartCurrent = -1
         if (rightPartCurrent == last + 1) rightPartCurrent = -1
     }
     repeat(last - first + 1) {

@@ -5,7 +5,6 @@ import org.jfree.chart.ui.ApplicationFrame
 import org.jfree.data.xy.*
 import org.jfree.ui.RefineryUtilities
 import java.awt.Dimension
-import kotlin.math.pow
 
 class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
     companion object {
@@ -35,7 +34,7 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
         val sortingData = getProcessingTime(maxAcceptableLevel, cases, logs = true)
 
         repeat(maxAcceptableLevel + 1) {
-            val newXYSeries = XYSeries("${(2.0).pow(it).toInt()} thread(-s)")
+            val newXYSeries = XYSeries("${(1 shl it)} thread(-s)")
             for (entry in sortingData[it]) {
                 newXYSeries.add(entry.key, entry.value)
             }
@@ -46,6 +45,6 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
 }
 
 fun main() {
-    val chartCreator = ChartCreator(numberOfAcceptableLevels = 5, cases = 20)
+    val chartCreator = ChartCreator(numberOfAcceptableLevels = 5, cases = 1)
     chartCreator.displayChart()
 }
