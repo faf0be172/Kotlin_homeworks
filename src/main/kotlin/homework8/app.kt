@@ -11,17 +11,19 @@ class MyView : View("Hello") {
             field.add(mutableListOf("Empty", "Empty", "Empty"))
         }
         for (i in 0..2) {
-            for (j in 0..2) {
-                button("_") {
-                    action {
-                        when (field[i][j]) {
-                            "X" -> {
-                                this.text = "0"
-                                field[i][j] = "0"
-                            }
-                            else -> {
-                                this.text = "X"
-                                field[i][j] = "X"
+            hbox {
+                for (j in 0..2) {
+                    button("_") {
+                        action {
+                            when (field[i][j]) {
+                                "X" -> {
+                                    this.text = "0"
+                                    field[i][j] = "0"
+                                }
+                                else -> {
+                                    this.text = "X"
+                                    field[i][j] = "X"
+                                }
                             }
                         }
                     }
