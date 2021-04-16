@@ -1,4 +1,4 @@
-package homework8
+package classwork8
 
 import javafx.scene.control.Label
 import tornadofx.App
