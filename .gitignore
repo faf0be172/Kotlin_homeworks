@@ -1,3 +1,4 @@
 .idea/
 .gradle/
 build/
+out/production/resources/homework1/storageData.json
