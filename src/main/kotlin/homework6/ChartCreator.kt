@@ -10,8 +10,8 @@ import java.awt.Dimension
 
 class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
     companion object {
-        const val width = 1200
-        const val height = 600
+        const val WIDTH = 1200
+        const val HEIGHT = 600
     }
     private val chart = ChartFactory.createXYLineChart(
         "MultiThreads sort",
@@ -24,7 +24,7 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
         frame.contentPane = ChartPanel(this.chart).apply {
             fillZoomRectangle = true
             isMouseWheelEnabled = true
-            preferredSize = Dimension(ChartCreator.width, ChartCreator.height)
+            preferredSize = Dimension(WIDTH, HEIGHT)
         }
         frame.pack()
         RefineryUtilities.centerFrameOnScreen(frame)
@@ -33,12 +33,13 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
 
     private fun createDataSet(maxAcceptableLevel: Int, cases: Int): XYDataset {
         val xySeriesCollection = XYSeriesCollection()
-        val sortingData = getProcessingTime(maxAcceptableLevel, cases, logs = true)
+        val sortingProcessor = SortingProcessor()
+        val sortingData = sortingProcessor.getProcessingTime(maxAcceptableLevel, cases, logs = true)
 
-        repeat(maxAcceptableLevel + 1) {
-            val newXYSeries = XYSeries("${(1 shl it)} thread(-s)")
-            for (entry in sortingData[it]) {
-                newXYSeries.add(entry.key, entry.value)
+        for (level in 0..maxAcceptableLevel) {
+            val newXYSeries = XYSeries("${(1 shl level)} thread(-s)")
+            sortingData[level].forEach {
+                newXYSeries.add(it.key, it.value)
             }
             xySeriesCollection.addSeries(newXYSeries)
         }
