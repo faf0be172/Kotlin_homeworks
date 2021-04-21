@@ -27,7 +27,7 @@ class SortingProcessor {
         repeat(cases) {
             val newTemplate = MutableList(size) { Random.nextInt(0, Int.MAX_VALUE) }
 
-            for(level in 0..maxAcceptableLevel) {
+            for (level in 0..maxAcceptableLevel) {
                 val temporaryList = newTemplate.toMutableList()
 
                 val startTime = System.currentTimeMillis()
@@ -42,7 +42,7 @@ class SortingProcessor {
     }
 
     fun getProcessingTime(maxAcceptableLevel: Int, cases: Int, logs: Boolean): List<Map<Int, Int>> {
-        val processingResults = MutableList(maxAcceptableLevel + 1) { mutableMapOf<Int, Int>()}
+        val processingResults = MutableList(maxAcceptableLevel + 1) { mutableMapOf<Int, Int>() }
 
         for ((index, value) in testArraySizes.withIndex()) {
             val averageTime = processSize(value, maxAcceptableLevel, cases)
