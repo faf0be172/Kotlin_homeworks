@@ -7,6 +7,7 @@ import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
 import org.jfree.ui.RefineryUtilities
 import java.awt.Dimension
+import kotlin.random.Random
 
 class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
     companion object {
@@ -36,8 +37,14 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
         val sortingProcessor = SortingProcessor()
         val sortingData = sortingProcessor.getProcessingTime(maxAcceptableLevel, cases, logs = true)
 
-        for (level in 0..maxAcceptableLevel) {
-            val newXYSeries = XYSeries("${(1 shl level)} thread(-s)")
+        var newXYSeries = XYSeries("single thread")
+        sortingData[0].forEach {
+            newXYSeries.add(it.key, it.value)
+        }
+
+        xySeriesCollection.addSeries(newXYSeries)
+        for (level in 1..maxAcceptableLevel) {
+            newXYSeries = XYSeries("~ ${1 shl (level + 1)} thread(-s)")
             sortingData[level].forEach {
                 newXYSeries.add(it.key, it.value)
             }
@@ -48,6 +55,8 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
 }
 
 fun main() {
-    val chartCreator = ChartCreator(numberOfAcceptableLevels = 5, cases = 1)
+    val randomList = List(20) { Random.nextInt(0, 30)}
+    println(randomList)
+    val chartCreator = ChartCreator(numberOfAcceptableLevels = 6, cases = 1)
     chartCreator.displayChart()
 }

@@ -31,7 +31,7 @@ class SortingProcessor {
                 val temporaryList = newTemplate.toMutableList()
 
                 val startTime = System.currentTimeMillis()
-                temporaryList.multiThreadMergeSort(level)
+                temporaryList.sorted(level)
 
                 val finishTime = System.currentTimeMillis()
                 averageTimes[level] = (finishTime - startTime).toInt()
