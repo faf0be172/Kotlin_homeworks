@@ -36,17 +36,12 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
         val sortingProcessor = SortingProcessor()
         val sortingData = sortingProcessor.getProcessingTime(maxAcceptableLevel, cases, logs = true)
 
-        var newXYSeries = XYSeries("single thread")
-        sortingData[0].forEach {
-            newXYSeries.add(it.key, it.value)
-        }
-
-        xySeriesCollection.addSeries(newXYSeries)
-        for (level in 1..maxAcceptableLevel) {
-            newXYSeries = XYSeries("~ ${1 shl (level + 1)} thread(-s)")
-            sortingData[level].forEach {
-                newXYSeries.add(it.key, it.value)
+        for (level in sortingData.indices) {
+            val newXYSeries = when (level) {
+                0 -> XYSeries("single thread")
+                else -> XYSeries("~ ${1 shl (level + 1)} thread(-s)")
             }
+            sortingData[level].forEach { newXYSeries.add(it.key, it.value) }
             xySeriesCollection.addSeries(newXYSeries)
         }
         return xySeriesCollection
@@ -54,6 +49,6 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
 }
 
 fun main() {
-    val chartCreator = ChartCreator(numberOfAcceptableLevels = 6, cases = 1)
+    val chartCreator = ChartCreator(numberOfAcceptableLevels = 6, cases = 2)
     chartCreator.displayChart()
 }
