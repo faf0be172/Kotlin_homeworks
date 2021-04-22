@@ -29,7 +29,7 @@ internal class MergeSortTest {
 
     @ParameterizedTest
     @MethodSource("getArguments")
-    fun testSort(level: Int, testList: MutableList<Int>,) {
+    fun testSort(level: Int, testList: MutableList<Int>) {
 
         // expected: sort from kotlin.collections
         val expected = testList.toIntArray()

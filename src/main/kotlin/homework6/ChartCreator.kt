@@ -49,6 +49,6 @@ class ChartCreator(numberOfAcceptableLevels: Int, cases: Int) {
 }
 
 fun main() {
-    val chartCreator = ChartCreator(numberOfAcceptableLevels = 6, cases = 2)
+    val chartCreator = ChartCreator(numberOfAcceptableLevels = 5, cases = 1)
     chartCreator.displayChart()
 }
