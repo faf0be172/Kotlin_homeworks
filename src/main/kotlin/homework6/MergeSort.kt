@@ -20,9 +20,11 @@ private fun MutableList<Int>.upperBound(value: Int, leftBorder: Int, rightBorder
 private data class Segment(val left: Int, val right: Int)
 
 private fun MutableList<Int>.multiThreadMerge(
-    resultList: MutableList<Int>, leftSegment: Segment,
+    resultList: MutableList<Int>,
+    leftSegment: Segment,
     rightSegment: Segment,
-    begin: Int, currentLevel: Int
+    begin: Int,
+    currentLevel: Int
 ) {
     val left1 = leftSegment.left
     val right1 = leftSegment.right
@@ -67,8 +69,10 @@ private fun MutableList<Int>.multiThreadMerge(
 }
 
 private fun MutableList<Int>.multiThreadSort(
-    resultList: MutableList<Int>, segment: Segment,
-    begin: Int, currentLevel: Int
+    resultList: MutableList<Int>,
+    segment: Segment,
+    begin: Int,
+    currentLevel: Int
 ) {
     val left1 = segment.left
     val right1 = segment.right
