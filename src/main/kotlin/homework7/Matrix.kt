@@ -5,7 +5,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.lang.StringBuilder
 
-class Matrix(private val rows: List<Array<Int>>) {
+class Matrix(private val rows: List<IntArray>) {
+    companion object {
+        const val COROUTINES_LAUNCH_INDICATOR = 100
+    }
     init {
         for (row in rows) {
             require(row.size == rows.size) { "Matrix is not square" }
@@ -13,9 +16,9 @@ class Matrix(private val rows: List<Array<Int>>) {
     }
 
     private val size = rows.size
-    private val columns: List<Array<Int>> = run {
-        val columns = List(this.size) { Array(this.size) {0} }
-        for ((index1, column) in columns.withIndex()){
+    private val columns: List<IntArray> = run {
+        val columns = List(this.size) { IntArray(this.size) { 0 } }
+        for ((index1, column) in columns.withIndex()) {
             for ((index2, row) in this.rows.withIndex()) {
                 column[index2] = (row[index1])
             }
@@ -33,11 +36,11 @@ class Matrix(private val rows: List<Array<Int>>) {
 
     fun multiplyTo(matrix: Matrix): Matrix {
         require(this.size == matrix.size) { "Dimensions are not equal" }
-        val resultMatrixRows = List(this.size) { Array(this.size) { 0 } }
+        val resultMatrixRows = List(this.size) { IntArray(this.size) { 0 } }
 
         val leftRows = this.rows
         val rightColumns = matrix.columns
-        if (matrix.size >= 100) {
+        if (matrix.size >= COROUTINES_LAUNCH_INDICATOR) {
             val jobList = mutableListOf<Job>()
             runBlocking {
                 for ((index1, row) in leftRows.withIndex()) {
@@ -60,7 +63,7 @@ class Matrix(private val rows: List<Array<Int>>) {
         return Matrix(resultMatrixRows)
     }
 
-    private fun multiplyRowAndColumn(row: Array<Int>, column: Array<Int>): Int {
+    private fun multiplyRowAndColumn(row: IntArray, column: IntArray): Int {
         require(row.size == column.size) { "Dimensions are not equal" }
         var resultSum = 0
         for (index in row.indices) {

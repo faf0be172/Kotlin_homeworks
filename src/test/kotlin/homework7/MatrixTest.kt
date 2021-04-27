@@ -13,16 +13,16 @@ internal class MatrixTest {
         @JvmStatic
         fun getIncorrectArguments(): Stream<Arguments> = Stream.of(
             Arguments.of(
-                listOf(arrayOf(1, 2, 3), arrayOf(1, 2)),
-                listOf(arrayOf(1, 2), arrayOf(3, 4))
+                listOf(intArrayOf(1, 2, 3), intArrayOf(1, 2)),
+                listOf(intArrayOf(1, 2), intArrayOf(3, 4))
             ),
             Arguments.of(
-                listOf(arrayOf(1, 2), arrayOf(3, 4)),
-                listOf(arrayOf(1, 2, 3), arrayOf(4, 5))
+                listOf(intArrayOf(1, 2), intArrayOf(3, 4)),
+                listOf(intArrayOf(1, 2, 3), intArrayOf(4, 5))
             ),
             Arguments.of(
-                listOf(arrayOf(1, 2), arrayOf(1, 2)),
-                listOf(arrayOf(1, 2, 3), arrayOf(4, 5, 6), arrayOf(7, 8, 9))
+                listOf(intArrayOf(1, 2), intArrayOf(1, 2)),
+                listOf(intArrayOf(1, 2, 3), intArrayOf(4, 5, 6), intArrayOf(7, 8, 9))
             )
         )
 
@@ -31,26 +31,26 @@ internal class MatrixTest {
             Arguments.of(
                 Matrix(
                     listOf(
-                        arrayOf(5, 1, 2, 6),
-                        arrayOf(2, 5, 5, 4),
-                        arrayOf(5, 2, 1, 5),
-                        arrayOf(7, 9, 4, 9)
+                        intArrayOf(5, 1, 2, 6),
+                        intArrayOf(2, 5, 5, 4),
+                        intArrayOf(5, 2, 1, 5),
+                        intArrayOf(7, 9, 4, 9)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(2, 8, 2, 4),
-                        arrayOf(6, 9, 8, 3),
-                        arrayOf(9, 5, 5, 3),
-                        arrayOf(3, 6, 2, 9)
+                        intArrayOf(2, 8, 2, 4),
+                        intArrayOf(6, 9, 8, 3),
+                        intArrayOf(9, 5, 5, 3),
+                        intArrayOf(3, 6, 2, 9)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(52, 95, 40, 83),
-                        arrayOf(91, 110, 77, 74),
-                        arrayOf(46, 93, 41, 74),
-                        arrayOf(131, 211, 124, 148)
+                        intArrayOf(52, 95, 40, 83),
+                        intArrayOf(91, 110, 77, 74),
+                        intArrayOf(46, 93, 41, 74),
+                        intArrayOf(131, 211, 124, 148)
                     )
                 )
             ),
@@ -58,29 +58,29 @@ internal class MatrixTest {
             Arguments.of(
                 Matrix(
                     listOf(
-                        arrayOf(9, 1, 7, 3, 3),
-                        arrayOf(2, 7, 8, 3, 1),
-                        arrayOf(5, 1, 5, 2, 1),
-                        arrayOf(6, 2, 1, 9, 5),
-                        arrayOf(2, 3, 2, 4, 8)
+                        intArrayOf(9, 1, 7, 3, 3),
+                        intArrayOf(2, 7, 8, 3, 1),
+                        intArrayOf(5, 1, 5, 2, 1),
+                        intArrayOf(6, 2, 1, 9, 5),
+                        intArrayOf(2, 3, 2, 4, 8)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(8, 5, 3, 8, 8),
-                        arrayOf(2, 3, 6, 6, 5),
-                        arrayOf(3, 2, 5, 8, 1),
-                        arrayOf(3, 1, 6, 4, 2),
-                        arrayOf(9, 9, 3, 9, 9)
+                        intArrayOf(8, 5, 3, 8, 8),
+                        intArrayOf(2, 3, 6, 6, 5),
+                        intArrayOf(3, 2, 5, 8, 1),
+                        intArrayOf(3, 1, 6, 4, 2),
+                        intArrayOf(9, 9, 3, 9, 9)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(131, 92, 95, 173, 117),
-                        arrayOf(72, 59, 109, 143, 74),
-                        arrayOf(72, 49, 61, 103, 63),
-                        arrayOf(127, 92, 104, 149, 122),
-                        arrayOf(112, 99, 82, 138, 113)
+                        intArrayOf(131, 92, 95, 173, 117),
+                        intArrayOf(72, 59, 109, 143, 74),
+                        intArrayOf(72, 49, 61, 103, 63),
+                        intArrayOf(127, 92, 104, 149, 122),
+                        intArrayOf(112, 99, 82, 138, 113)
                     )
                 )
             ),
@@ -88,26 +88,26 @@ internal class MatrixTest {
             Arguments.of(
                 Matrix(
                     listOf(
-                        arrayOf(196, 122, 452, 975),
-                        arrayOf(512, 471, 728, 339),
-                        arrayOf(258, 811, 870, 218),
-                        arrayOf(430, 271, 521, 544)
+                        intArrayOf(196, 122, 452, 975),
+                        intArrayOf(512, 471, 728, 339),
+                        intArrayOf(258, 811, 870, 218),
+                        intArrayOf(430, 271, 521, 544)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(841, 738, 991, 528),
-                        arrayOf(653, 688, 692, 269),
-                        arrayOf(489, 160, 757, 250),
-                        arrayOf(565, 150, 532, 641)
+                        intArrayOf(841, 738, 991, 528),
+                        intArrayOf(653, 688, 692, 269),
+                        intArrayOf(489, 160, 757, 250),
+                        intArrayOf(565, 150, 532, 641)
                     )
                 ),
                 Matrix(
                     listOf(
-                        arrayOf(1016405, 447154, 1139524, 874281),
-                        arrayOf(1285682, 869234, 1564768, 796334),
-                        arrayOf(1295161, 920272, 1591456, 711621),
-                        arrayOf(1100722, 668748, 1297467, 778893)
+                        intArrayOf(1016405, 447154, 1139524, 874281),
+                        intArrayOf(1285682, 869234, 1564768, 796334),
+                        intArrayOf(1295161, 920272, 1591456, 711621),
+                        intArrayOf(1100722, 668748, 1297467, 778893)
                     )
                 )
             )
@@ -116,7 +116,7 @@ internal class MatrixTest {
 
     @ParameterizedTest
     @MethodSource("getIncorrectArguments")
-    fun testExceptions(rows1: List<Array<Int>>, rows2: List<Array<Int>>) {
+    fun testExceptions(rows1: List<IntArray>, rows2: List<IntArray>) {
         assertThrows<IllegalArgumentException> {
             val matrix1 = Matrix(rows1)
             val matrix2 = Matrix(rows2)
