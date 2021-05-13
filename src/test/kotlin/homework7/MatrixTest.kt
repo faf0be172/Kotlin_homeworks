@@ -110,6 +110,52 @@ internal class MatrixTest {
                         intArrayOf(1100722, 668748, 1297467, 778893)
                     )
                 )
+            ),
+            Arguments.of(
+                Matrix(
+                    listOf(
+                        intArrayOf(4, -1, -6),
+                        intArrayOf(9, 6, 4),
+                        intArrayOf(-3, -2, 0)
+                    )
+                ),
+                Matrix(
+                    listOf(
+                        intArrayOf(-5, -100, -5),
+                        intArrayOf(1, 6, 0),
+                        intArrayOf(32, 9, -10)
+                    )
+                ),
+                Matrix(
+                    listOf(
+                        intArrayOf(-213, -460, 40),
+                        intArrayOf(89, -828, -85),
+                        intArrayOf(13, 288, 15)
+                    )
+                )
+            ),
+            Arguments.of(
+                Matrix(
+                    listOf(
+                        intArrayOf(0, 0, 0),
+                        intArrayOf(-6, 5, -1),
+                        intArrayOf(-5, -4, 6)
+                    )
+                ),
+                Matrix(
+                    listOf(
+                        intArrayOf(-5, -100, -5),
+                        intArrayOf(1, 6, 0),
+                        intArrayOf(32, 9, -10)
+                    )
+                ),
+                Matrix(
+                    listOf(
+                        intArrayOf(0, 0, 0),
+                        intArrayOf(3, 621, 40),
+                        intArrayOf(213, 530, -35)
+                    )
+                )
             )
         )
     }

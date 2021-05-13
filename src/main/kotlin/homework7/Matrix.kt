@@ -3,36 +3,24 @@ package homework7
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.lang.StringBuilder
 
 class Matrix(private val rows: List<IntArray>) {
+    init {
+        rows.forEach {
+            require(it.size == rows.size) { "Matrix is not square" }
+        }
+    }
+
     companion object {
         const val COROUTINES_LAUNCH_INDICATOR = 100
     }
-    init {
-        for (row in rows) {
-            require(row.size == rows.size) { "Matrix is not square" }
-        }
-    }
 
     private val size = rows.size
-    private val columns: List<IntArray> = run {
-        val columns = List(this.size) { IntArray(this.size) { 0 } }
-        for ((index1, column) in columns.withIndex()) {
-            for ((index2, row) in this.rows.withIndex()) {
-                column[index2] = (row[index1])
-            }
-        }
-        columns
-    }
+    private val columns: List<IntArray> = MutableList(this.size) {
+        IntArray(this.size) { 0 }
+    }.mapIndexed { index, _ -> (rows.map { it[index] }).toIntArray() }
 
-    override fun toString(): String {
-        val stringBuilder = StringBuilder()
-        for (row in this.rows) {
-            stringBuilder.append(row.joinToString(separator = "\t", postfix = "\n"))
-        }
-        return stringBuilder.toString()
-    }
+    override fun toString() = rows.joinToString(separator = "\n", transform = { it.joinToString(separator = "\t") })
 
     fun multiplyTo(matrix: Matrix): Matrix {
         require(this.size == matrix.size) { "Dimensions are not equal" }
@@ -51,7 +39,7 @@ class Matrix(private val rows: List<IntArray>) {
                         }
                     })
                 }
-                for (job in jobList) { job.join() }
+                jobList.forEach { it.join() }
             }
         } else {
             for ((index1, row) in leftRows.withIndex()) {
@@ -65,10 +53,6 @@ class Matrix(private val rows: List<IntArray>) {
 
     private fun multiplyRowAndColumn(row: IntArray, column: IntArray): Int {
         require(row.size == column.size) { "Dimensions are not equal" }
-        var resultSum = 0
-        for (index in row.indices) {
-            resultSum += row[index] * column[index]
-        }
-        return resultSum
+        return row.zip(column).map { it.first * it.second }.sum()
     }
 }
