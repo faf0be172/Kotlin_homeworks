@@ -11,10 +11,6 @@ class Matrix(private val rows: List<IntArray>) {
         }
     }
 
-    companion object {
-        const val COROUTINES_LAUNCH_INDICATOR = 100
-    }
-
     private val size = rows.size
     private val columns: List<IntArray> = MutableList(this.size) {
         IntArray(this.size) { 0 }
@@ -28,25 +24,17 @@ class Matrix(private val rows: List<IntArray>) {
 
         val leftRows = this.rows
         val rightColumns = matrix.columns
-        if (matrix.size >= COROUTINES_LAUNCH_INDICATOR) {
-            val jobList = mutableListOf<Job>()
-            runBlocking {
-                for ((index1, row) in leftRows.withIndex()) {
-                    // possibly faster than N * N coroutines
-                    jobList.add(launch {
-                        for ((index2, column) in rightColumns.withIndex()) {
-                            resultMatrixRows[index1][index2] = multiplyRowAndColumn(row, column)
-                        }
-                    })
-                }
-                jobList.forEach { it.join() }
-            }
-        } else {
+        val jobList = mutableListOf<Job>()
+        runBlocking {
             for ((index1, row) in leftRows.withIndex()) {
-                for ((index2, column) in rightColumns.withIndex()) {
-                    resultMatrixRows[index1][index2] = multiplyRowAndColumn(row, column)
-                }
+                // possibly faster than N * N coroutines
+                jobList.add(launch {
+                    for ((index2, column) in rightColumns.withIndex()) {
+                        resultMatrixRows[index1][index2] = multiplyRowAndColumn(row, column)
+                    }
+                })
             }
+            jobList.forEach { it.join() }
         }
         return Matrix(resultMatrixRows)
     }
