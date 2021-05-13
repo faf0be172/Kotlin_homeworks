@@ -29,6 +29,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation("com.squareup:kotlinpoet:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+    implementation("org.jfree:jfreechart:1.5.3")
+    implementation("org.jfree:jcommon:1.0.24")
 }
 
 detekt {
