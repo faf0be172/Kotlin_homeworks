@@ -5,7 +5,7 @@ import homework8.GameController
 class GameModel(private val controller: GameController) {
 
     private var isFinished = false
-    private val maxPossibleMoves = controller.size * controller.size
+    private val maxPossibleMoves = GameController.SIZE * GameController.SIZE
 
     var playerSymbol = "x"
     var botSymbol = "o"

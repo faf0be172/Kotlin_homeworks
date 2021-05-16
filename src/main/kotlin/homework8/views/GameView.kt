@@ -3,7 +3,12 @@ package homework8.views
 import homework8.GameController
 import homework8.GameStylesheet
 import javafx.geometry.Pos
-import tornadofx.*
+import tornadofx.View
+import tornadofx.addClass
+import tornadofx.gridpane
+import tornadofx.row
+import tornadofx.button
+import tornadofx.action
 
 class GameView : View("Tic-Tac-Toe") {
     companion object {

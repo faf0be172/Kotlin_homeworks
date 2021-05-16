@@ -3,7 +3,14 @@ package homework8.views
 import homework8.GameController
 import homework8.GameStylesheet
 import javafx.geometry.Pos
-import tornadofx.*
+import tornadofx.button
+import tornadofx.View
+import tornadofx.hbox
+import tornadofx.vbox
+import tornadofx.addClass
+import tornadofx.action
+import tornadofx.Fragment
+import tornadofx.text
 
 class FinalView : View("Try again?") {
     private val controller: GameController by inject()

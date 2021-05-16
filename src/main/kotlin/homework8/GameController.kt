@@ -6,13 +6,15 @@ import homework8.views.FinalView
 import homework8.views.GameView
 import homework8.views.ResultFragment
 import homework8.views.StartView
-import tornadofx.*
+import tornadofx.Controller
+import tornadofx.text
 
 class GameController : Controller() {
-
-    val size = 3
+    companion object {
+        const val SIZE = 3
+    }
     val gameModel = GameModel(this)
-    val gameField = GameField(this)
+    val gameField = GameField()
 
     fun startGame() {
         gameModel.tryToMoveBot()
@@ -51,8 +53,8 @@ class GameController : Controller() {
 
     private fun clearButtons() {
         val gameView = find<GameView>()
-        for (row in 0 until this.size) {
-            for (column in 0 until this.size) {
+        for (row in 0 until SIZE) {
+            for (column in 0 until SIZE) {
                 val button = gameView.root.lookup("#$row$column")
                 button.text(" ")
                 button.isDisable = false

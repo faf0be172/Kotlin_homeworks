@@ -20,13 +20,13 @@ class HardBot(controller: GameController) : Bot(controller) {
 
     override fun makeMove() {
         val model = controller.gameModel
-        val size = controller.size
+        val size = GameController.SIZE
 
         aiPlayer = model.botSymbol
         huPlayer = model.playerSymbol
 
         val move = if (controller.gameModel.numberOfMoves == 0) {
-            Pair(size / 2,  size / 2)
+            Pair(size / 2, size / 2)
         } else {
             findBestMove()
         }

@@ -42,8 +42,8 @@ fun checkField(field: Array<Array<String>>): String {
     return result
 }
 
-class GameField(controller: GameController) {
-    private val size = controller.size
+class GameField {
+    private val size = GameController.SIZE
     val field = Array(size) { Array(size) { " " } }
 
     fun getEmptyCells(): List<Pair<Int, Int>> {
