@@ -1,7 +1,7 @@
 package homework8.views
 
 import homework8.GameController
-import homework8.GameStylesheet
+import homework8.GameStyleSheet
 import javafx.geometry.Pos
 import tornadofx.button
 import tornadofx.View
@@ -16,17 +16,17 @@ class FinalView : View("Try again?") {
     private val controller: GameController by inject()
     override val root = vbox {
         hbox {
-            addClass(GameStylesheet.menuWindow)
+            addClass(GameStyleSheet.menuWindow)
             this.alignment = Pos.CENTER
             button("Restart") {
-                addClass(GameStylesheet.menuButton)
+                addClass(GameStyleSheet.menuButton)
                 action {
                     controller.backToMenu()
                 }
             }
 
             button("Exit") {
-                addClass(GameStylesheet.menuButton)
+                addClass(GameStyleSheet.menuButton)
                 action {
                     controller.exit()
                 }
@@ -37,7 +37,7 @@ class FinalView : View("Try again?") {
 
 class ResultFragment(text: String) : Fragment("Game result") {
     override val root = vbox {
-        addClass(GameStylesheet.resultFragment)
+        addClass(GameStyleSheet.resultFragment)
         this.alignment = Pos.CENTER
         this.text(text)
     }

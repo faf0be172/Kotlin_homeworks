@@ -1,9 +1,13 @@
 package homework8
 
 import javafx.scene.text.FontWeight
-import tornadofx.*
+import tornadofx.Stylesheet
+import tornadofx.cssclass
+import tornadofx.mm
+import tornadofx.multi
+import tornadofx.c
 
-class GameStylesheet : Stylesheet() {
+class GameStyleSheet : Stylesheet() {
     companion object {
         val menuWindow by cssclass()
         private val menuWindowHeight = 50.mm
