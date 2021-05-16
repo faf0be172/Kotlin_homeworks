@@ -50,10 +50,12 @@ class HardBot(controller: GameController) : Bot(controller) {
         val emptyCells = controller.gameField.getEmptyCells()
         val winner = checkField(newField)
 
-        if (winner != "nobody") {
-            return if (winner == huPlayer) -1 else 1
-        } else {
-            if (emptyCells.isEmpty()) { return 0 }
+        if (winner != "nobody" || emptyCells.isEmpty()) {
+            return when (winner) {
+                huPlayer -> -1
+                aiPlayer -> 1
+                else -> 0
+            }
         }
 
         val movesList = mutableListOf<Int>()

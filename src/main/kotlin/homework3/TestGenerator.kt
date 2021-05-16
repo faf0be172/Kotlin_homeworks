@@ -58,7 +58,7 @@ class TestGenerator(configPath: String) {
         try {
             File(packagePath).writeText(file)
         } catch (error: IllegalArgumentException) {
-            throw IllegalArgumentException("Incorrect kt file path (${error}")
+            throw IllegalArgumentException("Incorrect kt file path ($error)")
         }
     }
 }
