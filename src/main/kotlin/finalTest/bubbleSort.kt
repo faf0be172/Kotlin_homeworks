@@ -5,6 +5,7 @@ import java.lang.IllegalArgumentException
 /**
  * [bubbleSorted] uses comparator and sort copy of iterable collection
  * @return [bubbleSorted] sorted iterable collection
+ * [checkNullsComparator] and [checkUnequalsElementsComparator] check user comparator's verdicts
  */
 
 private fun <T> checkNullsComparator(sortingCollection: MutableList<T>, comparator: Comparator<T>) {

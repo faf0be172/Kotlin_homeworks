@@ -25,7 +25,7 @@ class BadComparator2 : Comparator<Int> {
         return when {
             o1 > o2 -> -1
             o1 < o2 -> 1
-            else -> 300
+            else -> 1
         }
     }
 }
