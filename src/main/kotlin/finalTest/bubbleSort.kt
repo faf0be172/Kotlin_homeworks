@@ -1,17 +1,44 @@
 package finalTest
 
+import java.lang.IllegalArgumentException
+
 /**
  * [bubbleSorted] uses comparator and sort copy of iterable collection
  * @return [bubbleSorted] sorted iterable collection
  */
 
-fun <T> bubbleSorted(array: Iterable<T>, comparator: Comparator<T>): Iterable<T> {
+private fun <T> checkComparator(sortingCollection: MutableList<T>, comparator: Comparator<T>) {
+    if (sortingCollection.size > 0) {
+        val comparingResult = comparator.compare(sortingCollection[0], sortingCollection[0])
+        if (comparingResult != 0) {
+            throw IllegalArgumentException("Your comparator return non-null value for similar elements")
+        }
+    }
+    if (sortingCollection.size > 1) {
+        val firstComparing = comparator.compare(sortingCollection[0], sortingCollection[1])
+        val secondComparing = comparator.compare(sortingCollection[1], sortingCollection[0])
+        if (firstComparing > 0 && secondComparing > 0) {
+            throw IllegalArgumentException("Your comparator return non-negative values")
+        }
+        if (firstComparing < 0 && secondComparing < 0) {
+            throw IllegalArgumentException("Your comparator return non-positive values")
+        }
+    }
+}
+
+fun <T> bubbleSorted(collection: Iterable<T>, comparator: Comparator<T>): Iterable<T> {
     var isSwapped = true
-    val sortingCollection = array.toMutableList()
+    val sortingCollection = collection.toMutableList()
+    checkComparator(sortingCollection, comparator)
+
     while (isSwapped) {
         isSwapped = false
-        for (i in 0..(sortingCollection.size - 2)) {
-            if (comparator.compare(sortingCollection[i], sortingCollection[i + 1]) > 0) {
+        for (i in 0 until sortingCollection.size - 1) {
+            val comparatorResult = comparator.compare(
+                sortingCollection[i],
+                sortingCollection[i + 1]
+            )
+            if (comparatorResult > 0) {
                 /**
                  * swap neighboring elements
                  */
@@ -26,15 +53,4 @@ fun <T> bubbleSorted(array: Iterable<T>, comparator: Comparator<T>): Iterable<T>
      * if nothing to swap then return sorted collection
      */
     return sortingCollection
-}
-
-fun main() {
-    val simpleTestArray =  mutableListOf(1, 5, 6, 4, 10, 7, 2, 10, 0)
-    val sortedTestArray = bubbleSorted(simpleTestArray, SimpleComparator())
-
-    println("Unsorted list:")
-    println(simpleTestArray.joinToString(separator = ", "))
-
-    println("Sorted list:")
-    println(sortedTestArray.joinToString(separator = ", "))
 }
