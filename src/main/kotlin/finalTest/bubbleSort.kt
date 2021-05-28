@@ -8,20 +8,39 @@ import java.lang.IllegalArgumentException
  * [checkNullsComparator] and [checkUnequalsElementsComparator] check user comparator's verdicts
  */
 
+private fun <T> tryToGetVerdict(comparator: Comparator<T>, element1: T, element2: T): Int {
+    return try {
+        comparator.compare(element1, element2)
+    } catch (e: ArithmeticException) {
+        throw error("Any of arithmetic error when processing comparison: " + e.message)
+    }
+}
+
 private fun <T> checkNullsComparator(sortingCollection: MutableList<T>, comparator: Comparator<T>) {
     if (sortingCollection.size > 0) {
-        val comparingResult = comparator.compare(sortingCollection[0], sortingCollection[0])
+        val comparingResult = tryToGetVerdict(comparator, sortingCollection[0], sortingCollection[0])
         if (comparingResult != 0) {
             throw IllegalArgumentException("Your comparator return non-null value for similar elements")
         }
     }
 }
 
-private fun <T> checkUnequalsElementsComparator(sortingCollection: MutableList<T>, comparator: Comparator<T>) {
+private fun <T> checkUnequalsElementsComparator(
+    sortingCollection: MutableList<T>,
+    comparator: Comparator<T>
+) {
 
     if (sortingCollection.size > 1) {
-        val firstComparing = comparator.compare(sortingCollection[0], sortingCollection[1])
-        val secondComparing = comparator.compare(sortingCollection[1], sortingCollection[0])
+        val firstComparing = tryToGetVerdict(
+            comparator,
+            sortingCollection[0],
+            sortingCollection[1]
+        )
+        val secondComparing = tryToGetVerdict(
+            comparator,
+            sortingCollection[1],
+            sortingCollection[0]
+        )
         if (firstComparing > 0 && secondComparing > 0) {
             throw IllegalArgumentException("Your comparator return non-negative values")
         }
@@ -40,7 +59,8 @@ fun <T> bubbleSorted(collection: Iterable<T>, comparator: Comparator<T>): Iterab
     while (isSwapped) {
         isSwapped = false
         for (i in 0 until sortingCollection.size - 1) {
-            val comparatorResult = comparator.compare(
+            val comparatorResult = tryToGetVerdict(
+                comparator,
                 sortingCollection[i],
                 sortingCollection[i + 1]
             )

@@ -29,3 +29,14 @@ class BadComparator2 : Comparator<Int> {
         }
     }
 }
+
+class DividingByZeroComparator: Comparator<Int> {
+    override fun compare(o1: Int, o2: Int): Int {
+        val difference = o1 / (o1 - o2)
+        return when {
+            difference > 0 -> 1
+            difference < 0 -> -1
+            else -> 0
+        }
+    }
+}
