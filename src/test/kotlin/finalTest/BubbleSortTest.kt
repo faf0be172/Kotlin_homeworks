@@ -2,9 +2,11 @@ package finalTest
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.lang.IllegalArgumentException
 import java.util.stream.Stream
 import kotlin.random.Random
 
@@ -46,5 +48,12 @@ internal class BubbleSortKtTest {
             mutableListOf(1, 2, 3, 4, 10),
             bubbleSorted(mutableListOf(1, 2, 3, 4, 10), naturalOrder())
         )
+    }
+
+    @Test
+    fun sortWithBadComparator() {
+        assertThrows<IllegalArgumentException> {
+            bubbleSorted(mutableListOf(1, 2, 3, 4, 10), BadComparator())
+        }
     }
 }
