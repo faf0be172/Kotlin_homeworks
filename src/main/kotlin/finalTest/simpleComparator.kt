@@ -1,6 +1,6 @@
 package finalTest
 
-class SimpleComparator: Comparator<Int> {
+class SimpleComparator : Comparator<Int> {
     override fun compare(o1: Int, o2: Int): Int {
         return when {
             o1 > o2 -> -1
@@ -10,7 +10,7 @@ class SimpleComparator: Comparator<Int> {
     }
 }
 
-class BadComparator1: Comparator<Int> {
+class BadComparator1 : Comparator<Int> {
     override fun compare(o1: Int, o2: Int): Int {
         return when {
             o1 > o2 -> 1
@@ -20,7 +20,7 @@ class BadComparator1: Comparator<Int> {
     }
 }
 
-class BadComparator2: Comparator<Int> {
+class BadComparator2 : Comparator<Int> {
     override fun compare(o1: Int, o2: Int): Int {
         return when {
             o1 > o2 -> -1
