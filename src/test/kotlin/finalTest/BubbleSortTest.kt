@@ -51,9 +51,16 @@ internal class BubbleSortKtTest {
     }
 
     @Test
-    fun sortWithBadComparator() {
+    fun sortWithBadComparatorNotSimilarElements() {
         assertThrows<IllegalArgumentException> {
-            bubbleSorted(mutableListOf(1, 2, 3, 4, 10), BadComparator())
+            bubbleSorted(mutableListOf(1, 2, 3, 4, 10), BadComparator1())
+        }
+    }
+
+    @Test
+    fun sortWithBadComparatorSimilarElements() {
+        assertThrows<IllegalArgumentException> {
+            bubbleSorted(mutableListOf(1, 2, 3, 4, 10), BadComparator2())
         }
     }
 }
