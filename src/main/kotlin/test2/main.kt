@@ -1,4 +1,4 @@
-package test_2
+package test2
 
 import tornadofx.App
 import tornadofx.find

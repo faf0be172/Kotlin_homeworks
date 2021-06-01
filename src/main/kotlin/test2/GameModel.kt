@@ -1,4 +1,4 @@
-package test_2
+package test2
 
 class GameModel(tableSize: Int) {
     private var table = mutableListOf<MutableList<Int>>()
@@ -14,7 +14,7 @@ class GameModel(tableSize: Int) {
     }
 
     private fun generateTable() {
-        val listOfNumbers = MutableList(this.size * this.size) { index -> (index / 2) }
+        val listOfNumbers = MutableList(this.size * this.size) { index -> (index shr 1) }
         listOfNumbers.shuffle()
         table.clear()
         for (i in 0 until size) {
@@ -65,6 +65,6 @@ class GameModel(tableSize: Int) {
     }
 
     fun isGameEnded(): Boolean {
-        return openedNumbers.size == size * size / 2
+        return openedNumbers.size == size * size shr 1
     }
 }

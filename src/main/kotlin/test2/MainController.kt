@@ -1,4 +1,4 @@
-package test_2
+package test2
 
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.Controller

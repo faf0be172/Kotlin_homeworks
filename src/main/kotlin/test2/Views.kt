@@ -1,4 +1,4 @@
-package test_2
+package test2
 
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
@@ -43,8 +43,8 @@ class GameView : View("Find pairs") {
 
     override val root = vbox {
         this.alignment = Pos.CENTER
-        minHeight = HEIGHT_OF_WINDOW * 2
-        minWidth = WIDTH_OF_WINDOW * 2
+        minHeight = HEIGHT_OF_WINDOW + HEIGHT_OF_WINDOW
+        minWidth = WIDTH_OF_WINDOW + HEIGHT_OF_WINDOW
         style {
             backgroundColor += Color.ALICEBLUE
         }
