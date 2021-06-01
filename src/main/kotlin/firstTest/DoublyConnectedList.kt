@@ -8,9 +8,9 @@ class ListElement<T>(val value: T) {
 }
 
 class DoublyConnectedList<T> {
-    var head: ListElement<T>? = null
+    private var head: ListElement<T>? = null
     private var tail: ListElement<T>? = null
-    var size: Int = 0
+    private var size: Int = 0
 
     fun isEmpty(): Boolean {
         return head == null
