@@ -58,7 +58,7 @@ class GameModel(tableSize: Int) {
             return emptyList()
         }
         ++parity
-        return when(parity) {
+        return when (parity) {
             1 -> {
                 firstCell = Pair(x, y)
                 emptyList()
