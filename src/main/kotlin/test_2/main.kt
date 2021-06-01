@@ -7,7 +7,7 @@ import tornadofx.launch
 class FindPairsApp : App(StartView::class)
 
 fun main() {
-    val size = 2
+    val size = 4
     if (size % 2 == 1) {
         error("Incorrect table size")
     }
