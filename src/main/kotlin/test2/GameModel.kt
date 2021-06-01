@@ -19,7 +19,7 @@ class GameModel(tableSize: Int) {
         table.clear()
         for (i in 0 until size) {
             table.add(mutableListOf())
-            for (j in 0 until size) {
+            repeat(size) {
                 table[i].add(listOfNumbers.first())
                 listOfNumbers.removeAt(0)
             }
@@ -32,36 +32,37 @@ class GameModel(tableSize: Int) {
         }
     }
 
+    private fun getDoubleMoveResult(x: Int, y: Int): List<Pair<Int, Int>> {
+        val result: MutableList<Pair<Int, Int>>
+        secondCell = Pair(x, y)
+        if (firstCell == secondCell) {
+            firstCell = Pair(-1, -1)
+            secondCell = Pair(-1, -1)
+            parity = 0
+            return emptyList()
+        }
+
+        checkNumbers()
+        val firstValue = table[firstCell.first][firstCell.second]
+        val secondValue = table[secondCell.first][secondCell.second]
+        result = mutableListOf(firstCell, secondCell, Pair(firstValue, secondValue))
+
+        firstCell = Pair(-1, -1)
+        secondCell = Pair(-1, -1)
+        parity = 0
+        return result
+    }
+
     fun makeMove(x: Int, y: Int): List<Pair<Int, Int>> {
         if (table[x][y] in openedNumbers) {
             return emptyList()
         }
         ++parity
-        var result = mutableListOf<Pair<Int, Int>>()
-
         if (parity == 1) {
             firstCell = Pair(x, y)
+            return emptyList()
         }
-
-        if (parity > 1) {
-            secondCell = Pair(x, y)
-            if (firstCell == secondCell) {
-                firstCell = Pair(-1, -1)
-                secondCell = Pair(-1, -1)
-                parity = 0
-                return emptyList()
-            }
-
-            checkNumbers()
-            val firstValue = table[firstCell.first][firstCell.second]
-            val secondValue = table[secondCell.first][secondCell.second]
-            result = mutableListOf(firstCell, secondCell, Pair(firstValue, secondValue))
-
-            firstCell = Pair(-1, -1)
-            secondCell = Pair(-1, -1)
-            parity = 0
-        }
-        return result
+        return getDoubleMoveResult(x, y)
     }
 
     fun isGameEnded(): Boolean {
