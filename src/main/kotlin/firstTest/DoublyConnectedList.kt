@@ -39,7 +39,7 @@ class DoublyConnectedList<T> {
 
     fun add(element: T, position: Int) {
         if (position > this.size || position < 0) {
-            throw IllegalArgumentException("Incorrect position")
+            throw IllegalArgumentException("Incorrect position (size)")
         }
         if (head == null) {
             tail = ListElement(element)
@@ -48,10 +48,10 @@ class DoublyConnectedList<T> {
             return
         }
         if (position == 0) {
-            val oldHead = head
             val newHead = ListElement(element)
-            newHead.next = oldHead
-            oldHead?.previous = newHead
+            newHead.next = head
+            head?.previous = newHead
+            head = newHead
             ++size
             return
         }
@@ -119,7 +119,7 @@ class DoublyConnectedList<T> {
             throw IllegalStateException("List is empty")
         }
         if (position < 0 || position >= this.size) {
-            throw IllegalArgumentException("Incorrect position")
+            throw IllegalArgumentException("Incorrect position (size)")
         }
         var currentElement = head
         repeat(position) {
