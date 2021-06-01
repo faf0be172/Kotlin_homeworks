@@ -58,11 +58,13 @@ class GameModel(tableSize: Int) {
             return emptyList()
         }
         ++parity
-        if (parity == 1) {
-            firstCell = Pair(x, y)
-            return emptyList()
+        return when(parity) {
+            1 -> {
+                firstCell = Pair(x, y)
+                emptyList()
+            }
+            else -> getDoubleMoveResult(x, y)
         }
-        return getDoubleMoveResult(x, y)
     }
 
     fun isGameEnded(): Boolean {
