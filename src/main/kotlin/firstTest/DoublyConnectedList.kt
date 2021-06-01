@@ -18,7 +18,7 @@ class DoublyConnectedList<T> {
 
     fun add(element: T) {
         val oldTail: ListElement<T>? = tail
-        if(oldTail == null) {
+        if (oldTail == null) {
             tail = ListElement(element)
             head = ListElement(element)
             ++size
@@ -70,27 +70,7 @@ class DoublyConnectedList<T> {
         rightElement?.previous = newElement
         ++size
     }
-
-    fun remove(position: Int) {
-        if (isEmpty()) {
-            throw IllegalStateException("List is empty")
-        }
-        if (position < 0 || position >= this.size) {
-            throw IllegalArgumentException("Incorrect position")
-        }
-        if (position == 0) {
-            if (head?.next == tail) {
-                head = null
-                tail = null
-                --size
-                return
-            }
-            val newHead = head?.next
-            newHead?.previous = null
-            head = newHead
-            --size
-            return
-        }
+    private fun removeFromMid(position: Int) {
         var leftElement = head
         repeat(position - 1) {
             if (leftElement?.next == null) {
@@ -107,6 +87,29 @@ class DoublyConnectedList<T> {
         ++size
     }
 
+    fun remove(position: Int) {
+        if (isEmpty()) {
+            throw IllegalStateException("List is empty")
+        }
+        if (position < 0 || position >= this.size) {
+            throw IllegalArgumentException("Incorrect position (size)")
+        }
+        if (position == 0) {
+            if (head?.next == tail) {
+                head = null
+                tail = null
+                --size
+                return
+            }
+            val newHead = head?.next
+            newHead?.previous = null
+            head = newHead
+            --size
+            return
+        }
+        removeFromMid(position)
+    }
+
     fun get(): T {
         if (head == null) {
             throw IllegalStateException("The queue is empty")
@@ -114,13 +117,7 @@ class DoublyConnectedList<T> {
         return head!!.value
     }
 
-    fun get(position: Int): T {
-        if (isEmpty()) {
-            throw IllegalStateException("List is empty")
-        }
-        if (position < 0 || position >= this.size) {
-            throw IllegalArgumentException("Incorrect position (size)")
-        }
+    private fun getFromMid(position: Int): T {
         var currentElement = head
         repeat(position) {
             if (currentElement?.next == null) {
@@ -130,12 +127,14 @@ class DoublyConnectedList<T> {
         }
         return currentElement!!.value
     }
-}
 
-fun main() {
-    val testList = DoublyConnectedList<Int>()
-    testList.add(0)
-    testList.add(1)
-    testList.add(-1, 1)
-    println("${testList.get(1)}")
+    fun get(position: Int): T {
+        if (isEmpty()) {
+            throw IllegalStateException("List is empty")
+        }
+        if (position < 0 || position >= this.size) {
+            throw IllegalArgumentException("Incorrect position (size)")
+        }
+        return getFromMid(position)
+    }
 }
