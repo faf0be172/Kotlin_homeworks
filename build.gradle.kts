@@ -3,10 +3,11 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.net.URL
 
 plugins {
-    kotlin("jvm") version "1.4.30"
-    kotlin("plugin.serialization") version "1.4.31"
-    id("io.gitlab.arturbosch.detekt") version "1.15.0"
-    id("org.jetbrains.dokka") version "1.4.20"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
+    id("io.gitlab.arturbosch.detekt") version "1.16.0"
+    id("org.jetbrains.dokka") version "1.4.30"
+    id("org.openjfx.javafxplugin") version "0.0.8"
     application
 }
 
@@ -16,6 +17,10 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     jcenter()
+}
+
+javafx {
+    modules("javafx.controls")
 }
 
 dependencies {
@@ -30,6 +35,12 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.6.0")
     implementation("org.jfree:jfreechart:1.5.3")
     implementation("org.jfree:jcommon:1.0.24")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.32")
+
+    implementation("no.tornado:tornadofx:1.7.20")
+    implementation("org.openjfx:javafx-base:11.0.2")
+    implementation("org.openjfx:javafx:11.0.2")
+    implementation("org.openjfx:javafx-controls:11.0.2")
 }
 
 detekt {
