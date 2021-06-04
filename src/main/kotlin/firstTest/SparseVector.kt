@@ -62,13 +62,12 @@ data class SparseVector<T : ArithmeticAvailable<T>>(private val size: Int, val m
         val componentsResult = mutableListOf<T>()
         for (key in keysUnion.toList()) {
             if (vector.map.containsKey(key)) {
-                vector.map[key].let {
-                    if (it != null) {
-                        this.map[key]?.times(it)?.let { it1 -> componentsResult.add(it1) }
-                    }
+                val currentComponent = vector.map[key]
+                if (currentComponent != null) {
+                    this.map[key]?.times(currentComponent)?.let { it1 -> componentsResult.add(it1) }
                 }
             }
         }
-        return componentsResult.fold(componentsResult[0] - componentsResult[0]) {sum, element  -> sum + element}
+        return componentsResult.fold(componentsResult[0] - componentsResult[0]) { sum, element -> sum + element }
     }
 }
