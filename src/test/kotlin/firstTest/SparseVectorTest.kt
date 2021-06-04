@@ -28,6 +28,16 @@ internal class VectorTest {
     }
 
     @Test
+    fun simpleScalarProduct() {
+        val number1 = ArithmeticInt(2)
+        val number2 = ArithmeticInt(3)
+        val vector1 = SparseVector(2, mutableMapOf(0 to number1))
+        val vector2 = SparseVector(2, mutableMapOf(0 to number2, 1 to number2))
+        val product = vector1 * vector2
+        assertEquals(ArithmeticInt(6), product)
+    }
+
+    @Test
     fun differentSizesException() {
         val number1 = ArithmeticInt(10)
         val number2 = ArithmeticInt(22)

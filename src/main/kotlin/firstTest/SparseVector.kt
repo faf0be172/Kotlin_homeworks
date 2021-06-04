@@ -49,4 +49,26 @@ data class SparseVector<T : ArithmeticAvailable<T>>(private val size: Int, val m
         }
         return SparseVector(size, newVectorMap)
     }
+
+    operator fun times(vector: SparseVector<T>): T {
+        checkDimensions(vector)
+        if (this.size <= 0 || vector.size <= 0) {
+            throw IllegalArgumentException("Any of vectors is null")
+        }
+
+        val keysUnion = vector.map.keys.toMutableSet()
+        keysUnion.addAll(this.map.keys)
+
+        val componentsResult = mutableListOf<T>()
+        for (key in keysUnion.toList()) {
+            if (vector.map.containsKey(key)) {
+                vector.map[key].let {
+                    if (it != null) {
+                        this.map[key]?.times(it)?.let { it1 -> componentsResult.add(it1) }
+                    }
+                }
+            }
+        }
+        return componentsResult.fold(componentsResult[0] - componentsResult[0]) {sum, element  -> sum + element}
+    }
 }
