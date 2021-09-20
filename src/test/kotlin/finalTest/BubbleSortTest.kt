@@ -63,11 +63,4 @@ internal class BubbleSortKtTest {
             bubbleSorted(mutableListOf(1, 2, 3, 4, 10), BadComparator2())
         }
     }
-
-    @Test
-    fun sortWithDividingByZero() {
-        assertThrows<IllegalStateException> {
-            bubbleSorted(mutableListOf(1, 2, 3, 3, 10), DividingByZeroComparator())
-        }
-    }
 }

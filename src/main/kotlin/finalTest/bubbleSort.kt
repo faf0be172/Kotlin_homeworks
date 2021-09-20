@@ -9,11 +9,7 @@ import java.lang.IllegalArgumentException
  */
 
 private fun <T> tryToGetVerdict(comparator: Comparator<T>, element1: T, element2: T): Int {
-    return try {
-        comparator.compare(element1, element2)
-    } catch (e: ArithmeticException) {
-        throw error("Any of arithmetic error when processing comparison: " + e.message)
-    }
+    return comparator.compare(element1, element2)
 }
 
 private fun <T> checkNullsComparator(sortingCollection: MutableList<T>, comparator: Comparator<T>) {
