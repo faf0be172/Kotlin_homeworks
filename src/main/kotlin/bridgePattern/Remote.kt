@@ -37,7 +37,6 @@ open class Remote(protected var device: Device) {
         } else {
             device.setChannel(device.getChannel() - 1)
         }
-
     }
 
     fun channelUp() {
