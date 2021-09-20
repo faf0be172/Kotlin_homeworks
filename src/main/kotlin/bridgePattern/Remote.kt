@@ -29,7 +29,6 @@ open class Remote(protected var device: Device) {
         } else {
             device.setVolume(device.getVolume() + 1)
         }
-
     }
 
     fun channelDown() {
@@ -47,7 +46,6 @@ open class Remote(protected var device: Device) {
         } else {
             device.setChannel(device.getChannel() + 1)
         }
-
     }
 }
 

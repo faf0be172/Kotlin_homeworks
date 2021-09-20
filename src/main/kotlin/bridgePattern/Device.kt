@@ -1,7 +1,5 @@
 package bridgePattern
 
-import java.lang.IllegalStateException
-
 /**
  * [Device] is a base interface of different devices
  * [Device] contains primitive operations
@@ -32,7 +30,7 @@ class TV(private val channelNumber: Int) : Device {
     }
 
     private var isDeviceEnabled = false
-    private var volumeLevel = 50
+    private var volumeLevel = 0
     private var channelLevel = 1
 
     override fun enable() {
