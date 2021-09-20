@@ -25,14 +25,14 @@ interface Device {
  * [TV] is a concrete implementation of [Device]
  */
 
-class TV(private val channelNumber: Int): Device {
+class TV(private val channelNumber: Int) : Device {
 
     companion object {
         private const val deviceVolumeMax = 100
     }
 
     private var isDeviceEnabled = false
-    private var volumeLevel = 0
+    private var volumeLevel = 50
     private var channelLevel = 1
 
     override fun enable() {
@@ -46,7 +46,7 @@ class TV(private val channelNumber: Int): Device {
     override fun setChannel(channel: Int) {
         if (isDeviceEnabled) {
             if (channel > channelNumber || channel <= 0) {
-                throw IllegalStateException("Incorrect channel number")
+                throw IllegalArgumentException("Incorrect channel number")
             }
             channelLevel = channel
         }
@@ -54,8 +54,8 @@ class TV(private val channelNumber: Int): Device {
 
     override fun setVolume(percent: Int) {
         if (isDeviceEnabled) {
-            if (percent <= 0 || percent > deviceVolumeMax) {
-                throw IllegalStateException("Incorrect volume percent")
+            if (percent < 0 || percent > deviceVolumeMax) {
+                throw IllegalArgumentException("Incorrect volume percent")
             }
             volumeLevel = percent
         }

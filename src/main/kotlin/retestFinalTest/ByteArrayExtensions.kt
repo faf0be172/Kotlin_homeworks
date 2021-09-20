@@ -42,7 +42,7 @@ fun ByteArray.decompressed(): ByteArray {
     val newByteList = mutableListOf<Byte>()
     for (i in this.indices) {
         if (i % 2 == 0) {
-            for (j in 0 until this[i].toInt()) {
+            repeat(this[i].toInt()) {
                 newByteList.add(this[i + 1])
             }
         }

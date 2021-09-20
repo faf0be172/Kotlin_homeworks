@@ -8,38 +8,46 @@ package bridgePattern
 
 open class Remote(protected var device: Device) {
     fun togglePower() {
-        if (device.isEnabled())
+        if (device.isEnabled()) {
             device.disable()
-        else
+        } else {
             device.enable()
+        }
     }
 
     fun volumeDown() {
-        if (device.getVolume() - 1 < 0)
+        if (device.getVolume() - 1 < 0) {
             device.setVolume(0)
-        else
+        } else {
             device.setVolume(device.getVolume() - 1)
+        }
     }
 
     fun volumeUp() {
-        if (device.getVolume() + 1 > device.getVolumeMax())
-            device.setVolume(100)
-        else
+        if (device.getVolume() + 1 > device.getVolumeMax()) {
+            device.setVolume(device.getVolumeMax())
+        } else {
             device.setVolume(device.getVolume() + 1)
+        }
+
     }
 
     fun channelDown() {
-        if (device.getChannel() == 1)
+        if (device.getChannel() == 1) {
             device.setChannel(device.getChannelNumber())
-        else
+        } else {
             device.setChannel(device.getChannel() - 1)
+        }
+
     }
 
     fun channelUp() {
-        if (device.getChannel() == device.getChannelNumber())
+        if (device.getChannel() == device.getChannelNumber()) {
             device.setChannel(1)
-        else
+        } else {
             device.setChannel(device.getChannel() + 1)
+        }
+
     }
 }
 
@@ -47,7 +55,7 @@ open class Remote(protected var device: Device) {
  * [AdvancedRemote] is an extended [Remote] which can work with [device] same as [Remote]
  */
 
-class AdvancedRemote(device: Device): Remote(device) {
+class AdvancedRemote(device: Device) : Remote(device) {
     fun muteVolume() {
         device.setVolume(0)
     }
